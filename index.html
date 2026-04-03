@@ -185,7 +185,7 @@
     50%       { opacity: 0.6; transform: scale(1.15); }
   }
 
-  /* ── NAV ── */
+  /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
@@ -402,7 +402,7 @@
     letter-spacing: 0.12em;
   }
 
-  /* ── SECTION SHARED ── */
+  /* SECTIONS */
   section { padding: 6rem 3rem; position: relative; }
   .section-inner { max-width: 1100px; margin: 0 auto; }
   .section-header {
@@ -713,11 +713,10 @@
     background: rgba(4,17,31,0.8);
   }
 
-  /* ── FADE IN ── */
-  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  /* ANIMATIONS */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
@@ -725,6 +724,8 @@
     .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
     .hero-stats { border-left: none; border-top: 1px solid rgba(0,200,232,0.2); padding-left: 0; padding-top: 1.5rem; flex-direction: row; flex-wrap: wrap; }
     section { padding: 4rem 1.5rem; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-stats { padding-left: 0; border-left: none; border-top: 1px solid var(--border); padding-top: 2rem; }
     .about-grid { grid-template-columns: 1fr; }
     .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
     .projects-grid { grid-template-columns: 1fr; }
@@ -924,25 +925,24 @@
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
     <a href="#projects">Projects</a>
+    <a href="#engineering">Engineering</a>
     <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
   </div>
-  <a href="mailto:putrileksono1@gmail.com" class="nav-cta">Open to Work</a>
+  <a href="mailto:putrileksono1@gmail.com" class="nav-cta">Get in Touch</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-prism-1"></div>
   <div class="hero-prism-2"></div>
   <div class="hero-prism-3"></div>
   <div class="hero-inner">
-    <div class="hero-left fade-in">
-      <div class="hero-tag">AI & Machine Learning Engineer</div>
-      <h1>Building systems that<br/><em>see, learn,</em><br/>and reason.</h1>
-      <p class="hero-desc">Honours CS grad from UBC · 2× International Research Intern (Japan &amp; Germany) · Deep learning, computer vision, and full-stack ML deployment. Available from May 2026.</p>
+    <div>
+      <div class="hero-tag">Honours CS · UBC Okanagan · May 2026</div>
+      <h1>Building <em>intelligent</em> systems that matter</h1>
+      <p class="hero-desc">ML Engineer with international research experience across Japan & Germany. Computer vision, deep learning, and full-stack AI — grounded in an engineering foundation from Bandung Institute of Technology.</p>
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">View Projects</a>
-        <a href="mailto:putrileksono1@gmail.com" class="btn-secondary">Get in Touch</a>
+        <a href="#engineering" class="btn-secondary">Engineering Work</a>
       </div>
     </div>
     <div class="hero-stats fade-in" style="transition-delay:0.2s">
@@ -976,9 +976,9 @@
     </div>
     <div class="about-grid">
       <div class="about-text fade-in">
-        <p>I'm <strong>Putri Larasati Leksono</strong>, an Honours Computer Science student at UBC Okanagan graduating May 2026, specialising in <strong>machine learning, computer vision, and deep learning</strong>. Originally from Indonesia, I've had the rare opportunity to do research at a corporate R&amp;D lab in Japan and an academic institute in Germany — before finishing my undergrad.</p>
+        <p>I'm <strong>Putri Larasati Leksono</strong>, an Honours Computer Science student at UBC Okanagan graduating May 2026, specialising in <strong>machine learning, computer vision, and deep learning</strong>. Originally from Indonesia, I've had the rare opportunity to do research at a corporate R&D lab in Japan and an academic institute in Germany — before finishing my undergrad.</p>
         <p>At NTT's Device Technology Laboratory in Japan, I built ML pipelines for 3D ultrasound reconstruction, achieving a <strong>94% improvement in signal alignment</strong> using homography transforms and deep learning models including Swin Transformers. In Germany, I designed and trained an LSTM for real-time marine GPS forecasting.</p>
-        <p>I care about the <em>whole pipeline</em> — from raw data and model training through to deployment and usable products. I'm now looking for roles in <strong>ML engineering, computer vision, or data science</strong> where I can keep building things that matter.</p>
+        <p>Before CS, I studied <strong>Civil & Environmental Engineering at Bandung Institute of Technology (ITB)</strong>, Indonesia — where I developed an engineering foundation in infrastructure design, AutoCAD, SketchUp, and systems thinking. That background shapes how I approach problems: analytically, with attention to the real-world systems that code has to interact with.</p>
         <div class="about-chips">
           <span class="chip accent">PyTorch</span>
           <span class="chip accent">Computer Vision</span>
@@ -988,6 +988,9 @@
           <span class="chip">Full-Stack ML</span>
           <span class="chip">Signal Processing</span>
           <span class="chip">GenAI</span>
+          <span class="chip teal">AutoCAD</span>
+          <span class="chip teal">SketchUp</span>
+          <span class="chip teal">Environmental Engineering</span>
         </div>
       </div>
       <div class="about-awards fade-in" style="transition-delay:0.15s">
@@ -1033,13 +1036,13 @@
           <div class="exp-flag">🇯🇵</div>
         </div>
         <div class="exp-content">
-          <div class="exp-org">NTT Atsugi R&amp;D · Device Technology Lab</div>
+          <div class="exp-org">NTT Atsugi R&D · Device Technology Lab</div>
           <div class="exp-role">Research Intern</div>
           <div class="exp-research">3D Construction of Acoustic Impedance Microscopy Using Ultrasound Signals</div>
           <ul class="exp-bullets">
             <li>Built end-to-end Python data pipelines converting raw 1D ultrasound signals into <strong>3D cross-sectional reconstructions</strong> using signal filtering and noise-reduction techniques.</li>
             <li>Achieved <strong>94% improvement in signal alignment accuracy</strong> via homography transformation algorithms validated against ground truth datasets.</li>
-            <li>Developed and benchmarked <strong>Swin Transformer and CNN models</strong> in PyTorch for biomedical image classification in a production R&amp;D environment.</li>
+            <li>Developed and benchmarked <strong>Swin Transformer and CNN models</strong> in PyTorch for biomedical image classification in a production R&D environment.</li>
             <li>Improved image reconstruction clarity by <strong>up to 90%</strong> using Wiener deconvolution, TV averaging, and frequency-time domain methods.</li>
           </ul>
           <div class="exp-tags">
@@ -1142,11 +1145,95 @@
   </div>
 </section>
 
+<!-- ENGINEERING BACKGROUND -->
+<section id="engineering">
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Engineering</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <p class="eng-intro fade-in">Before computer science, I studied <strong>Civil & Environmental Engineering at Bandung Institute of Technology (ITB)</strong> — one of Indonesia's most prestigious technical universities. That foundation gave me something most CS graduates don't have: the ability to think in <strong>systems, infrastructure, and real-world constraints</strong>. Transfer credits from ITB are reflected in my UBC degree.</p>
+
+    <div class="eng-context fade-in">
+      <div class="eng-context-card">
+        <div class="eng-context-label">Institution</div>
+        <div class="eng-context-title">Bandung Institute of Technology (ITB)</div>
+        <div class="eng-context-sub">Civil & Environmental Engineering · Bandung, Indonesia · One of Southeast Asia's leading technical universities, founded 1920.</div>
+        <div class="eng-tools">
+          <span class="chip teal">AutoCAD</span>
+          <span class="chip teal">SketchUp</span>
+          <span class="chip teal">Engineering Design</span>
+          <span class="chip teal">Environmental Systems</span>
+        </div>
+      </div>
+      <div class="eng-context-card">
+        <div class="eng-context-label">Skills Gained</div>
+        <div class="eng-context-title">Technical Design & Analysis</div>
+        <div class="eng-context-sub">Floor plan drafting and facility design in AutoCAD. 3D modelling in SketchUp. Infrastructure planning, cost-benefit analysis, and environmental engineering problem-solving.</div>
+        <div class="eng-tools">
+          <span class="chip teal">Floor Plans</span>
+          <span class="chip teal">Facility Design</span>
+          <span class="chip teal">Cost-Benefit Analysis</span>
+          <span class="chip teal">Technical Documentation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="eng-projects-header fade-in">Featured Engineering Project</div>
+
+    <div class="pltl-card fade-in">
+      <div class="pltl-grid">
+        <div>
+          <div class="pltl-label">Group Design Project · ITB · 2021–2022</div>
+          <div class="pltl-title">Leachate Power <em>Generator</em></div>
+          <div class="pltl-org">Pembangkit Listrik Tenaga Lindi (PLTL) · Bandung Institute of Technology</div>
+          <p class="pltl-desc">Designed a bioelectrochemical system to generate electricity from landfill leachate — hazardous wastewater that forms as liquid percolates through solid waste. Rather than treating leachate as a waste problem, this system converts its mineral-rich chemistry into usable electrical output, addressing both environmental remediation and renewable energy simultaneously.</p>
+          <p class="pltl-desc">Produced complete technical schematics in <strong>AutoCAD</strong> and full 3D facility models in <strong>SketchUp</strong>. Designed for industrial scale: 507 reactor tubes, each built from resin with dual anode/cathode chambers connected by KNO₃ salt bridges.</p>
+          <div class="exp-tags" style="margin-top:1rem">
+            <span class="tag">AutoCAD</span><span class="tag">SketchUp</span><span class="tag">Bioelectrochemistry</span>
+            <span class="tag">Environmental Engineering</span><span class="tag">Cost Analysis</span>
+          </div>
+        </div>
+        <div class="pltl-specs">
+          <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--teal2);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;">Technical Specifications</div>
+          <div class="spec-row">
+            <span class="spec-key">Electrode</span>
+            <span class="spec-val">Carbon biocathode · 9 chambers · <strong>Ø 1.2 cm × 6.5 cm</strong> · 0.0256 m² surface area</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Reactor</span>
+            <span class="spec-val">Resin cylinder · <strong>Ø 12 cm × 8 cm</strong> · dual anode/cathode chambers · KNO₃ salt bridge</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Scale</span>
+            <span class="spec-val"><strong>507 reactor tubes</strong> · 20-day cycle per batch</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Output</span>
+            <span class="spec-val"><strong>390 Watts</strong> total · 30 mW/m per reactor</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Benefits</span>
+            <span class="spec-val">Ammonia removal from leachate · reduced landfill power consumption · zero-emission process</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Budget</span>
+            <span class="spec-val"><strong>Rp 20,640,789</strong> total project cost (full cost-benefit analysis conducted)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- SKILLS -->
 <section id="skills">
   <div class="section-inner">
     <div class="section-header fade-in">
-      <span class="section-num">04</span>
+      <span class="section-num">05</span>
       <h2 class="section-title">Skills</h2>
       <div class="section-line"></div>
     </div>
@@ -1199,6 +1286,14 @@
           <span class="skill-pill">REST APIs</span><span class="skill-pill">JWT Auth</span>
         </div>
       </div>
+      <div class="skill-category fade-in" style="transition-delay:0.3s">
+        <div class="skill-cat-title teal">Engineering & Design Tools</div>
+        <div class="skill-list">
+          <span class="skill-pill teal-pill">AutoCAD</span><span class="skill-pill teal-pill">SketchUp</span>
+          <span class="skill-pill teal-pill">Floor Plan Design</span><span class="skill-pill teal-pill">3D Modelling</span>
+          <span class="skill-pill teal-pill">Technical Drawing</span><span class="skill-pill teal-pill">Facility Design</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1207,7 +1302,7 @@
 <section id="publication">
   <div class="section-inner">
     <div class="section-header fade-in">
-      <span class="section-num">05</span>
+      <span class="section-num">06</span>
       <h2 class="section-title">Publication</h2>
       <div class="section-line"></div>
     </div>
@@ -1225,7 +1320,7 @@
 <section id="contact">
   <div class="contact-label">Let's work together</div>
   <h2 class="contact-title">Open to <em>opportunities</em><br/>from May 2026</h2>
-  <p class="contact-sub">Seeking ML Engineer, Computer Vision, or Data Science roles. Based in Canada, open to remote &amp; relocation.</p>
+  <p class="contact-sub">Seeking ML Engineer, Computer Vision, Data Science, or Engineering-adjacent roles. Based in Kelowna, BC — open to remote & relocation.</p>
   <div class="contact-links">
     <a href="mailto:putrileksono1@gmail.com" class="contact-link glass">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -1243,7 +1338,7 @@
 </section>
 
 <footer>
-  © 2026 Putri Larasati Leksono · Built with care · Honours CS · UBC Okanagan
+  © 2026 Putri Larasati Leksono · Honours CS · UBC Okanagan · Built with care
 </footer>
 
 <script>
