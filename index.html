@@ -6,53 +6,206 @@
 <title>Putri Larasati Leksono — AI & ML Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
+  /* ── FRUTIGER AERO / AQUA THEME ── */
   :root {
-    --bg: #080C14;
-    --surface: #0E1420;
-    --surface2: #141C2E;
-    --border: #1E2A42;
-    --accent: #3B82F6;
-    --accent2: #60A5FA;
-    --accent3: #93C5FD;
-    --gold: #F59E0B;
-    --text: #E8EDF5;
-    --muted: #8A9BB8;
-    --dim: #4A5B7A;
+    --ocean-deep:   #04111f;
+    --ocean-mid:    #062440;
+    --ocean-light:  #0a3a5c;
+    --ocean-glow:   #0d5a8a;
+    --aqua:         #00c8e8;
+    --aqua-light:   #7fe7f5;
+    --aqua-pale:    #c4f2f8;
+    --white-glass:  rgba(255,255,255,0.10);
+    --white-glass2: rgba(255,255,255,0.06);
+    --border-glass: rgba(255,255,255,0.18);
+    --border-glass2:rgba(0,200,232,0.25);
+    --fish-orange:  #ff7c2a;
+    --fish-light:   #ffb06a;
+    --text:         #e8f6fb;
+    --muted:        #9ecfdc;
+    --dim:          #5a9ab0;
+    --gold:         #f9c84a;
   }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--bg);
+    background: var(--ocean-deep);
     color: var(--text);
     font-family: 'Outfit', sans-serif;
     font-weight: 300;
     overflow-x: hidden;
+    min-height: 100vh;
   }
 
-  /* ── NOISE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 0; opacity: 0.4;
+  /* ── UNDERWATER BACKGROUND ── */
+  .ocean-bg {
+    position: fixed; inset: 0; z-index: -3;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(0,120,200,0.35) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 20%, rgba(0,80,160,0.25) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 80%, rgba(0,40,100,0.4) 0%, transparent 60%),
+      linear-gradient(180deg, #04111f 0%, #062440 40%, #04111f 100%);
+  }
+
+  /* Caustic light rays */
+  .caustics {
+    position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    overflow: hidden;
+  }
+  .caustic-ray {
+    position: absolute;
+    top: -20%;
+    width: 2px;
+    height: 120%;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,200,232,0.12) 30%, rgba(120,220,255,0.08) 60%, transparent 100%);
+    transform-origin: top center;
+    animation: sway-ray 8s ease-in-out infinite;
+    filter: blur(1.5px);
+  }
+  .caustic-ray:nth-child(1)  { left: 8%;  width: 3px; animation-delay: 0s;    animation-duration: 9s; }
+  .caustic-ray:nth-child(2)  { left: 18%; width: 1px; animation-delay: 1.2s;  animation-duration: 7s; }
+  .caustic-ray:nth-child(3)  { left: 27%; width: 4px; animation-delay: 0.5s;  animation-duration: 10s; opacity:0.7; }
+  .caustic-ray:nth-child(4)  { left: 38%; width: 2px; animation-delay: 2s;    animation-duration: 8.5s; }
+  .caustic-ray:nth-child(5)  { left: 50%; width: 5px; animation-delay: 0.8s;  animation-duration: 11s; opacity:0.5; }
+  .caustic-ray:nth-child(6)  { left: 62%; width: 2px; animation-delay: 1.7s;  animation-duration: 7.5s; }
+  .caustic-ray:nth-child(7)  { left: 73%; width: 3px; animation-delay: 0.3s;  animation-duration: 9.5s; }
+  .caustic-ray:nth-child(8)  { left: 85%; width: 1px; animation-delay: 2.5s;  animation-duration: 8s; }
+  .caustic-ray:nth-child(9)  { left: 92%; width: 4px; animation-delay: 1s;    animation-duration: 10.5s; opacity:0.6; }
+
+  @keyframes sway-ray {
+    0%, 100% { transform: rotate(-4deg) scaleX(1); opacity: 0.6; }
+    33%       { transform: rotate(5deg) scaleX(1.4); opacity: 1; }
+    66%       { transform: rotate(-2deg) scaleX(0.8); opacity: 0.4; }
+  }
+
+  /* ── BUBBLES ── */
+  .bubbles { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+  .bubble {
+    position: absolute;
+    bottom: -40px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), rgba(180,240,255,0.15));
+    border: 1px solid rgba(255,255,255,0.3);
+    animation: rise-bubble linear infinite;
+    box-shadow: inset 0 0 6px rgba(255,255,255,0.2);
+  }
+  .bubble:nth-child(1)  { width:8px;  height:8px;  left:5%;  animation-duration:12s; animation-delay:0s; }
+  .bubble:nth-child(2)  { width:5px;  height:5px;  left:12%; animation-duration:9s;  animation-delay:2s; }
+  .bubble:nth-child(3)  { width:12px; height:12px; left:20%; animation-duration:14s; animation-delay:1s; }
+  .bubble:nth-child(4)  { width:4px;  height:4px;  left:30%; animation-duration:10s; animation-delay:3s; }
+  .bubble:nth-child(5)  { width:9px;  height:9px;  left:42%; animation-duration:11s; animation-delay:0.5s; }
+  .bubble:nth-child(6)  { width:6px;  height:6px;  left:55%; animation-duration:13s; animation-delay:1.8s; }
+  .bubble:nth-child(7)  { width:14px; height:14px; left:63%; animation-duration:15s; animation-delay:0.3s; }
+  .bubble:nth-child(8)  { width:5px;  height:5px;  left:72%; animation-duration:8s;  animation-delay:2.5s; }
+  .bubble:nth-child(9)  { width:10px; height:10px; left:80%; animation-duration:12s; animation-delay:1s; }
+  .bubble:nth-child(10) { width:7px;  height:7px;  left:90%; animation-duration:10s; animation-delay:3.5s; }
+  .bubble:nth-child(11) { width:3px;  height:3px;  left:35%; animation-duration:9s;  animation-delay:4s; }
+  .bubble:nth-child(12) { width:11px; height:11px; left:48%; animation-duration:16s; animation-delay:0.7s; }
+
+  @keyframes rise-bubble {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: 0.7; }
+    50%  { transform: translateY(-50vh) translateX(15px); opacity: 0.5; }
+    90%  { opacity: 0.3; }
+    100% { transform: translateY(-110vh) translateX(-10px); opacity: 0; }
+  }
+
+  /* ── FISH ── */
+  .fish-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+
+  /* Fish SVG inline via clip path trick — using CSS fish shapes */
+  .fish {
+    position: absolute;
+    animation: swim-fish linear infinite;
+    filter: drop-shadow(0 0 8px rgba(255,150,60,0.5));
+  }
+  .fish svg { display: block; }
+
+  .fish-1 { top: 15%; animation-duration: 28s; animation-delay: 0s; }
+  .fish-2 { top: 38%; animation-duration: 22s; animation-delay: 7s; transform: scaleX(-1); }
+  .fish-3 { top: 58%; animation-duration: 35s; animation-delay: 3s; }
+  .fish-4 { top: 75%; animation-duration: 20s; animation-delay: 12s; transform: scaleX(-1); }
+  .fish-5 { top: 28%; animation-duration: 32s; animation-delay: 18s; }
+
+  @keyframes swim-fish {
+    0%   { left: -120px; }
+    100% { left: 110%; }
+  }
+  .fish-2, .fish-4 {
+    animation-name: swim-fish-left;
+  }
+  @keyframes swim-fish-left {
+    0%   { right: -120px; left: auto; }
+    100% { right: 110%; left: auto; }
+  }
+
+  /* Gentle wave body motion */
+  .fish svg {
+    animation: fish-body 1.2s ease-in-out infinite;
+  }
+  @keyframes fish-body {
+    0%, 100% { transform: rotate(-2deg) translateY(0); }
+    50%       { transform: rotate(2deg) translateY(-3px); }
+  }
+
+  /* ── GLASSMORPHISM CARDS ── */
+  .glass {
+    background: rgba(10, 40, 70, 0.45);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    box-shadow:
+      0 8px 32px rgba(0,0,0,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 0 0 0.5px rgba(0,200,232,0.1);
+  }
+  .glass-lighter {
+    background: rgba(15, 60, 100, 0.35);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    box-shadow:
+      0 4px 20px rgba(0,0,0,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+
+  /* ── PRISMATIC GLOW ── */
+  .prism-glow {
+    position: absolute; pointer-events: none;
+    border-radius: 50%;
+    animation: prism-pulse 6s ease-in-out infinite;
+    filter: blur(60px);
+  }
+  @keyframes prism-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50%       { opacity: 0.6; transform: scale(1.15); }
   }
 
   /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1.2rem 3rem;
-    background: rgba(8,12,20,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    padding: 1rem 3rem;
+    background: rgba(4, 17, 31, 0.7);
+    backdrop-filter: blur(20px) saturate(200%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%);
+    border-bottom: 1px solid rgba(0,200,232,0.2);
+    box-shadow: 0 2px 24px rgba(0,0,0,0.4), 0 0 0 0.5px rgba(0,200,232,0.15);
   }
   .nav-logo {
     font-family: 'DM Mono', monospace;
     font-size: 0.85rem;
-    color: var(--accent);
-    letter-spacing: 0.15em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
+    background: linear-gradient(135deg, var(--aqua), var(--fish-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 6px rgba(0,200,232,0.4));
   }
   .nav-links { display: flex; gap: 2.5rem; }
   .nav-links a {
@@ -62,20 +215,31 @@
     text-decoration: none;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    transition: color 0.2s;
+    transition: color 0.25s, text-shadow 0.25s;
   }
-  .nav-links a:hover { color: var(--accent2); }
+  .nav-links a:hover {
+    color: var(--aqua-light);
+    text-shadow: 0 0 8px rgba(0,200,232,0.6);
+  }
   .nav-cta {
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent);
-    border: 1px solid var(--accent);
+    font-size: 0.72rem;
+    color: var(--aqua);
+    border: 1px solid rgba(0,200,232,0.5);
     padding: 0.45rem 1.2rem;
     text-decoration: none;
     letter-spacing: 0.08em;
-    transition: all 0.2s;
+    border-radius: 20px;
+    transition: all 0.25s;
+    background: rgba(0,200,232,0.08);
+    box-shadow: 0 0 12px rgba(0,200,232,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
   }
-  .nav-cta:hover { background: var(--accent); color: #fff; }
+  .nav-cta:hover {
+    background: rgba(0,200,232,0.2);
+    border-color: var(--aqua);
+    box-shadow: 0 0 20px rgba(0,200,232,0.35);
+    color: #fff;
+  }
 
   /* ── HERO ── */
   .hero {
@@ -85,39 +249,53 @@
     position: relative;
     overflow: hidden;
   }
-  .hero-glow {
-    position: absolute;
-    width: 700px; height: 700px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
-    top: -200px; right: -200px;
-    pointer-events: none;
-  }
-  .hero-glow2 {
-    position: absolute;
-    width: 400px; height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%);
-    bottom: -100px; left: 10%;
-    pointer-events: none;
-  }
   .hero-inner {
     max-width: 1100px; margin: 0 auto;
     display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    position: relative; z-index: 1;
   }
+
+  /* Prism blobs behind hero */
+  .hero-prism-1 {
+    position: absolute; width: 500px; height: 500px;
+    top: -100px; right: -150px;
+    background: radial-gradient(circle, rgba(0,160,220,0.25), rgba(0,80,160,0.1) 50%, transparent 70%);
+    border-radius: 50%; pointer-events: none; z-index: 0;
+    animation: prism-pulse 7s ease-in-out infinite;
+    filter: blur(40px);
+  }
+  .hero-prism-2 {
+    position: absolute; width: 300px; height: 300px;
+    bottom: -50px; left: 5%;
+    background: radial-gradient(circle, rgba(255,124,42,0.12), transparent 70%);
+    border-radius: 50%; pointer-events: none; z-index: 0;
+    animation: prism-pulse 9s ease-in-out infinite 2s;
+    filter: blur(50px);
+  }
+  .hero-prism-3 {
+    position: absolute; width: 250px; height: 250px;
+    top: 30%; left: 40%;
+    background: radial-gradient(circle, rgba(100,220,255,0.1), transparent 70%);
+    border-radius: 50%; pointer-events: none; z-index: 0;
+    animation: prism-pulse 11s ease-in-out infinite 1s;
+    filter: blur(35px);
+  }
+
   .hero-tag {
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent);
-    letter-spacing: 0.2em;
+    font-size: 0.72rem;
+    color: var(--aqua);
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     margin-bottom: 1.5rem;
     display: flex; align-items: center; gap: 0.75rem;
+    text-shadow: 0 0 10px rgba(0,200,232,0.5);
   }
   .hero-tag::before {
     content: '';
     display: block; width: 2rem; height: 1px;
-    background: var(--accent);
+    background: linear-gradient(to right, var(--aqua), transparent);
+    box-shadow: 0 0 6px var(--aqua);
   }
   .hero h1 {
     font-family: 'DM Serif Display', serif;
@@ -125,70 +303,103 @@
     line-height: 1.05;
     color: var(--text);
     margin-bottom: 1.5rem;
+    filter: drop-shadow(0 2px 20px rgba(0,180,220,0.2));
   }
   .hero h1 em {
     font-style: italic;
-    color: var(--accent2);
+    background: linear-gradient(135deg, var(--fish-orange) 0%, var(--fish-light) 50%, var(--aqua-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 12px rgba(255,124,42,0.4));
   }
   .hero-desc {
-    font-size: 1rem;
+    font-size: 0.97rem;
     color: var(--muted);
-    line-height: 1.8;
+    line-height: 1.85;
     margin-bottom: 2.5rem;
     max-width: 480px;
   }
   .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
   .btn-primary {
-    background: var(--accent);
+    background: linear-gradient(135deg, rgba(0,160,210,0.8), rgba(0,100,180,0.9));
     color: #fff;
     padding: 0.85rem 2rem;
     font-family: 'DM Mono', monospace;
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     text-decoration: none;
-    transition: all 0.2s;
+    border-radius: 24px;
+    border: 1px solid rgba(0,200,232,0.4);
+    box-shadow: 0 4px 18px rgba(0,140,200,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+    transition: all 0.25s;
     display: inline-block;
   }
-  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, rgba(0,200,232,0.9), rgba(0,140,210,0.9));
+    box-shadow: 0 6px 28px rgba(0,200,232,0.5);
+    transform: translateY(-2px);
+  }
   .btn-secondary {
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255,255,255,0.2);
     color: var(--muted);
     padding: 0.85rem 2rem;
     font-family: 'DM Mono', monospace;
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     text-decoration: none;
-    transition: all 0.2s;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    transition: all 0.25s;
     display: inline-block;
   }
-  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .btn-secondary:hover {
+    border-color: rgba(255,124,42,0.6);
+    color: var(--fish-light);
+    background: rgba(255,124,42,0.1);
+    box-shadow: 0 4px 16px rgba(255,124,42,0.2);
+    transform: translateY(-2px);
+  }
 
-  /* hero stats */
+  /* Hero stats */
   .hero-stats {
-    display: flex; flex-direction: column; gap: 1.2rem;
+    display: flex; flex-direction: column; gap: 1rem;
     padding-left: 2rem;
-    border-left: 1px solid var(--border);
+    border-left: 1px solid rgba(0,200,232,0.2);
   }
   .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 1.4rem 1.6rem;
-    transition: border-color 0.2s;
+    padding: 1.3rem 1.5rem;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
   }
-  .stat-card:hover { border-color: var(--accent); }
+  .stat-card::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: 16px;
+    background: linear-gradient(135deg, rgba(0,200,232,0.05), rgba(255,124,42,0.03));
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.4), 0 0 20px rgba(0,200,232,0.15); }
+  .stat-card:hover::before { opacity: 1; }
   .stat-number {
     font-family: 'DM Serif Display', serif;
     font-size: 2.2rem;
-    color: var(--accent2);
+    background: linear-gradient(135deg, var(--aqua), var(--aqua-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     line-height: 1;
     margin-bottom: 0.3rem;
+    filter: drop-shadow(0 0 8px rgba(0,200,232,0.3));
   }
   .stat-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: var(--dim);
     text-transform: uppercase;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
   }
 
   /* ── SECTION SHARED ── */
@@ -200,22 +411,28 @@
   }
   .section-num {
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent);
+    font-size: 0.72rem;
+    color: var(--fish-orange);
     letter-spacing: 0.15em;
+    text-shadow: 0 0 8px rgba(255,124,42,0.5);
   }
   .section-title {
     font-family: 'DM Serif Display', serif;
     font-size: 2.2rem;
     color: var(--text);
+    filter: drop-shadow(0 0 16px rgba(0,200,232,0.15));
   }
   .section-line {
     flex: 1; height: 1px;
-    background: linear-gradient(to right, var(--border), transparent);
+    background: linear-gradient(to right, rgba(0,200,232,0.3), transparent);
   }
 
+  /* Alternating section tints */
+  #about    { background: rgba(5,25,50,0.5); }
+  #projects { background: rgba(5,25,50,0.5); }
+  #publication { background: rgba(5,25,50,0.5); }
+
   /* ── ABOUT ── */
-  #about { background: var(--surface); }
   .about-grid {
     display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: start;
   }
@@ -228,54 +445,60 @@
   .chip {
     font-family: 'DM Mono', monospace;
     font-size: 0.7rem;
-    padding: 0.3rem 0.75rem;
-    background: var(--surface2);
-    border: 1px solid var(--border);
+    padding: 0.3rem 0.8rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
     color: var(--muted);
     letter-spacing: 0.05em;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s;
   }
-  .chip.accent { border-color: rgba(59,130,246,0.4); color: var(--accent3); }
-  .about-awards { display: flex; flex-direction: column; gap: 1rem; }
+  .chip:hover { border-color: rgba(0,200,232,0.4); color: var(--aqua-light); }
+  .chip.accent {
+    border-color: rgba(0,200,232,0.35);
+    color: var(--aqua-light);
+    background: rgba(0,200,232,0.08);
+    box-shadow: 0 0 8px rgba(0,200,232,0.1);
+  }
+  .about-awards { display: flex; flex-direction: column; gap: 0.85rem; }
   .award-item {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    padding: 1.2rem 1.4rem;
+    padding: 1rem 1.2rem;
     border-left: 3px solid var(--gold);
+    transition: transform 0.2s, box-shadow 0.2s;
   }
+  .award-item:hover { transform: translateX(3px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
   .award-item .award-title {
-    font-size: 0.85rem; color: var(--text); font-weight: 500; margin-bottom: 0.3rem;
+    font-size: 0.83rem; color: var(--text); font-weight: 500; margin-bottom: 0.25rem;
   }
   .award-item .award-meta {
     font-family: 'DM Mono', monospace;
-    font-size: 0.7rem; color: var(--dim); letter-spacing: 0.05em;
+    font-size: 0.68rem; color: var(--dim); letter-spacing: 0.05em;
   }
 
   /* ── EXPERIENCE ── */
   .exp-grid { display: flex; flex-direction: column; gap: 0; }
   .exp-item {
     display: grid; grid-template-columns: 200px 1fr;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(0,200,232,0.12);
     padding: 2.5rem 0;
     gap: 2.5rem;
   }
-  .exp-meta {}
   .exp-period {
     font-family: 'DM Mono', monospace;
-    font-size: 0.7rem; color: var(--accent);
+    font-size: 0.7rem; color: var(--aqua);
     letter-spacing: 0.1em; text-transform: uppercase;
     margin-bottom: 0.4rem;
+    text-shadow: 0 0 8px rgba(0,200,232,0.4);
   }
   .exp-location {
     font-family: 'DM Mono', monospace;
     font-size: 0.7rem; color: var(--dim);
     letter-spacing: 0.05em;
   }
-  .exp-flag {
-    font-size: 1.4rem; margin-top: 0.5rem;
-  }
-  .exp-content {}
+  .exp-flag { font-size: 1.4rem; margin-top: 0.5rem; }
   .exp-org {
-    font-size: 0.75rem; color: var(--accent3);
+    font-size: 0.72rem; color: var(--aqua-light);
     font-family: 'DM Mono', monospace;
     letter-spacing: 0.08em; text-transform: uppercase;
     margin-bottom: 0.3rem;
@@ -296,132 +519,172 @@
   }
   .exp-bullets li::before {
     content: '→';
-    color: var(--accent); flex-shrink: 0; margin-top: 0.05rem;
-    font-family: 'DM Mono', monospace; font-size: 0.8rem;
+    color: var(--aqua); flex-shrink: 0; margin-top: 0.05rem;
+    text-shadow: 0 0 6px rgba(0,200,232,0.5);
   }
   .exp-bullets li strong { color: var(--text); font-weight: 500; }
   .exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
   .tag {
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem; padding: 0.2rem 0.6rem;
-    background: rgba(59,130,246,0.08);
-    border: 1px solid rgba(59,130,246,0.2);
-    color: var(--accent3); letter-spacing: 0.05em;
+    font-size: 0.65rem; padding: 0.2rem 0.65rem;
+    background: rgba(0,200,232,0.08);
+    border: 1px solid rgba(0,200,232,0.22);
+    border-radius: 10px;
+    color: var(--aqua-pale); letter-spacing: 0.05em;
+    transition: all 0.2s;
   }
+  .tag:hover { background: rgba(0,200,232,0.15); border-color: rgba(0,200,232,0.45); }
 
   /* ── PROJECTS ── */
-  #projects { background: var(--surface); }
   .projects-grid {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
   }
   .project-card {
-    background: var(--bg);
-    border: 1px solid var(--border);
     padding: 2rem;
-    transition: border-color 0.25s, transform 0.25s;
+    transition: transform 0.28s, box-shadow 0.28s;
     cursor: default;
     display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
   }
-  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-  .project-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  /* Sheen effect */
+  .project-card::after {
+    content: '';
+    position: absolute; inset: 0; border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 24px rgba(0,200,232,0.12), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  .project-card.featured {
+    grid-column: span 2;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  }
   .project-num {
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem; color: var(--dim);
-    letter-spacing: 0.2em; margin-bottom: 1rem;
+    font-size: 0.63rem; color: var(--dim);
+    letter-spacing: 0.2em; margin-bottom: 0.85rem;
   }
   .project-title {
     font-family: 'DM Serif Display', serif;
-    font-size: 1.25rem; color: var(--text);
+    font-size: 1.2rem; color: var(--text);
     margin-bottom: 0.5rem; line-height: 1.3;
   }
   .project-type {
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem; color: var(--accent);
+    font-size: 0.63rem; color: var(--fish-orange);
     letter-spacing: 0.15em; text-transform: uppercase;
-    margin-bottom: 1rem;
+    margin-bottom: 0.9rem;
+    text-shadow: 0 0 8px rgba(255,124,42,0.4);
   }
   .project-desc {
     font-size: 0.85rem; color: var(--muted);
     line-height: 1.75; flex: 1;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.1rem;
   }
   .project-metric {
-    background: rgba(59,130,246,0.06);
-    border-left: 3px solid var(--accent);
-    padding: 0.6rem 0.9rem;
+    background: rgba(0,200,232,0.07);
+    border-left: 3px solid var(--aqua);
+    border-radius: 0 8px 8px 0;
+    padding: 0.55rem 0.9rem;
     font-family: 'DM Mono', monospace;
-    font-size: 0.72rem; color: var(--accent3);
-    margin-bottom: 1.2rem;
+    font-size: 0.7rem; color: var(--aqua-light);
+    margin-bottom: 1.1rem;
+    box-shadow: 0 0 12px rgba(0,200,232,0.08);
   }
 
   /* ── SKILLS ── */
-  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .skill-category {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 1.8rem;
-  }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
+  .skill-category { padding: 1.6rem; }
   .skill-cat-title {
     font-family: 'DM Mono', monospace;
-    font-size: 0.7rem; color: var(--accent);
+    font-size: 0.7rem; color: var(--aqua);
     letter-spacing: 0.15em; text-transform: uppercase;
-    margin-bottom: 1.2rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.1rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid rgba(0,200,232,0.2);
+    text-shadow: 0 0 8px rgba(0,200,232,0.3);
   }
   .skill-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .skill-pill {
-    font-size: 0.78rem; color: var(--muted);
-    padding: 0.25rem 0.6rem;
-    background: var(--bg);
-    border: 1px solid var(--border);
+    font-size: 0.76rem; color: var(--muted);
+    padding: 0.25rem 0.65rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
     transition: all 0.2s;
+    cursor: default;
   }
-  .skill-pill:hover { border-color: var(--accent); color: var(--accent3); }
+  .skill-pill:hover {
+    border-color: rgba(0,200,232,0.4);
+    color: var(--aqua-light);
+    background: rgba(0,200,232,0.1);
+    box-shadow: 0 0 10px rgba(0,200,232,0.15);
+  }
 
   /* ── PUBLICATION ── */
-  #publication { background: var(--surface); }
   .pub-card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--accent);
     padding: 2rem 2.5rem;
+    border-left: 4px solid var(--aqua);
+    position: relative; overflow: hidden;
+  }
+  .pub-card::before {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 0; width: 40%;
+    background: linear-gradient(to left, rgba(0,200,232,0.04), transparent);
+    pointer-events: none;
   }
   .pub-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem; color: var(--accent);
+    font-size: 0.65rem; color: var(--aqua);
     letter-spacing: 0.2em; text-transform: uppercase;
     margin-bottom: 0.75rem;
+    text-shadow: 0 0 8px rgba(0,200,232,0.4);
   }
   .pub-title {
     font-family: 'DM Serif Display', serif;
-    font-size: 1.3rem; color: var(--text);
+    font-size: 1.25rem; color: var(--text);
     line-height: 1.4; margin-bottom: 0.75rem;
   }
   .pub-meta {
     font-size: 0.82rem; color: var(--muted); line-height: 1.6;
   }
-  .pub-meta em { color: var(--accent3); font-style: italic; }
+  .pub-meta em { color: var(--aqua-light); font-style: italic; }
 
   /* ── CONTACT ── */
   #contact {
     text-align: center;
     padding: 7rem 3rem;
-    background: linear-gradient(180deg, var(--bg) 0%, #060A10 100%);
+    position: relative; overflow: hidden;
+  }
+  #contact::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,120,200,0.2) 0%, transparent 60%);
+    pointer-events: none;
   }
   .contact-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem; color: var(--accent);
-    letter-spacing: 0.2em; text-transform: uppercase;
+    font-size: 0.75rem; color: var(--fish-orange);
+    letter-spacing: 0.22em; text-transform: uppercase;
     margin-bottom: 1.5rem;
+    text-shadow: 0 0 10px rgba(255,124,42,0.5);
   }
   .contact-title {
     font-family: 'DM Serif Display', serif;
     font-size: clamp(2.5rem, 5vw, 4rem);
     color: var(--text); line-height: 1.1;
     margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 20px rgba(0,180,220,0.2));
   }
-  .contact-title em { color: var(--accent2); font-style: italic; }
+  .contact-title em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--fish-orange), var(--fish-light), var(--aqua-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
   .contact-sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 3rem; }
   .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
   .contact-link {
@@ -429,20 +692,25 @@
     font-family: 'DM Mono', monospace;
     font-size: 0.78rem; color: var(--muted);
     text-decoration: none;
-    border: 1px solid var(--border);
     padding: 0.75rem 1.5rem;
-    transition: all 0.2s; letter-spacing: 0.05em;
+    border-radius: 24px;
+    transition: all 0.25s; letter-spacing: 0.05em;
   }
-  .contact-link:hover { border-color: var(--accent); color: var(--accent2); transform: translateY(-2px); }
+  .contact-link:hover {
+    color: var(--aqua-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 16px rgba(0,200,232,0.2);
+  }
   .contact-link svg { width: 14px; height: 14px; }
 
   /* ── FOOTER ── */
   footer {
     text-align: center; padding: 2rem;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(0,200,232,0.12);
     font-family: 'DM Mono', monospace;
     font-size: 0.7rem; color: var(--dim);
     letter-spacing: 0.08em;
+    background: rgba(4,17,31,0.8);
   }
 
   /* ── FADE IN ── */
@@ -455,7 +723,7 @@
     .nav-links { display: none; }
     .hero { padding: 6rem 1.5rem 3rem; }
     .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .hero-stats { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 1.5rem; flex-direction: row; flex-wrap: wrap; }
+    .hero-stats { border-left: none; border-top: 1px solid rgba(0,200,232,0.2); padding-left: 0; padding-top: 1.5rem; flex-direction: row; flex-wrap: wrap; }
     section { padding: 4rem 1.5rem; }
     .about-grid { grid-template-columns: 1fr; }
     .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
@@ -463,9 +731,191 @@
     .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
     .skills-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── RAINBOW SHIMMER ON HOVER (prismatic) ── */
+  @keyframes rainbow-shift {
+    0%   { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(30deg); }
+  }
+  .project-card:hover .project-type,
+  .stat-card:hover .stat-number {
+    animation: rainbow-shift 2s linear infinite alternate;
+  }
 </style>
 </head>
 <body>
+
+<!-- UNDERWATER BACKGROUND -->
+<div class="ocean-bg"></div>
+<div class="caustics">
+  <div class="caustic-ray"></div>
+  <div class="caustic-ray"></div>
+  <div class="caustic-ray"></div>
+  <div class="caustic-ray"></div>
+  <div class="caustic-ray"></div>
+  <div class="caustic-ray"></div>
+  <div class="caustic-ray"></div>
+  <div class="caustic-ray"></div>
+  <div class="caustic-ray"></div>
+</div>
+
+<!-- BUBBLES -->
+<div class="bubbles">
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+</div>
+
+<!-- ANIMATED FISH -->
+<div class="fish-layer">
+
+  <!-- Fish 1 — medium, swimming right -->
+  <div class="fish fish-1">
+    <svg width="80" height="48" viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- tail -->
+      <path d="M68 24 L80 10 L80 38 Z" fill="#e86020" opacity="0.9"/>
+      <!-- body -->
+      <ellipse cx="40" cy="24" rx="30" ry="14" fill="#ff7c2a"/>
+      <!-- belly sheen -->
+      <ellipse cx="35" cy="28" rx="18" ry="7" fill="#ffb06a" opacity="0.45"/>
+      <!-- top sheen -->
+      <ellipse cx="34" cy="18" rx="16" ry="5" fill="#ffffff" opacity="0.15"/>
+      <!-- scales hint -->
+      <ellipse cx="42" cy="24" rx="10" ry="8" fill="none" stroke="#e86020" stroke-width="0.5" opacity="0.4"/>
+      <ellipse cx="28" cy="24" rx="8" ry="7" fill="none" stroke="#e86020" stroke-width="0.5" opacity="0.4"/>
+      <!-- eye -->
+      <circle cx="16" cy="21" r="4" fill="#1a3a50"/>
+      <circle cx="16" cy="21" r="2.2" fill="#0d2030"/>
+      <circle cx="15" cy="20" r="0.8" fill="white"/>
+      <!-- dorsal fin -->
+      <path d="M30 10 Q38 2 50 8 Q44 14 30 14 Z" fill="#e86020" opacity="0.8"/>
+      <!-- pectoral fin -->
+      <path d="M25 28 Q18 36 22 40 Q30 35 32 28 Z" fill="#ff9040" opacity="0.7"/>
+      <!-- mouth -->
+      <path d="M8 24 Q10 22 12 24" stroke="#c04010" stroke-width="1" fill="none"/>
+      <!-- rainbow prismatic shimmer -->
+      <ellipse cx="38" cy="22" rx="12" ry="6" fill="url(#fishSheen1)" opacity="0.3"/>
+      <defs>
+        <linearGradient id="fishSheen1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#7ef4ff"/>
+          <stop offset="30%"  stop-color="#ff9de2"/>
+          <stop offset="60%"  stop-color="#ffe680"/>
+          <stop offset="100%" stop-color="#7ef4ff"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Fish 2 — small, swimming left -->
+  <div class="fish fish-2">
+    <svg width="55" height="34" viewBox="0 0 55 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M46 17 L55 7 L55 27 Z" fill="#d05010" opacity="0.9"/>
+      <ellipse cx="27" cy="17" rx="22" ry="10" fill="#ff8830"/>
+      <ellipse cx="24" cy="20" rx="13" ry="5" fill="#ffb870" opacity="0.45"/>
+      <ellipse cx="23" cy="13" rx="11" ry="3.5" fill="#fff" opacity="0.12"/>
+      <circle cx="11" cy="15" r="3" fill="#1a3a50"/>
+      <circle cx="11" cy="15" r="1.6" fill="#0d2030"/>
+      <circle cx="10.3" cy="14.3" r="0.6" fill="white"/>
+      <path d="M20 7 Q26 2 35 6 Q30 10 20 10 Z" fill="#d05010" opacity="0.8"/>
+      <path d="M17 20 Q12 26 15 29 Q21 25 22 20 Z" fill="#ff9040" opacity="0.7"/>
+      <ellipse cx="26" cy="16" rx="9" ry="4" fill="url(#fishSheen2)" opacity="0.3"/>
+      <defs>
+        <linearGradient id="fishSheen2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#a0ffee"/>
+          <stop offset="50%"  stop-color="#ffe680"/>
+          <stop offset="100%" stop-color="#ffb0e0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Fish 3 — large, swimming right -->
+  <div class="fish fish-3">
+    <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M82 30 L100 12 L100 48 Z" fill="#e06015" opacity="0.9"/>
+      <ellipse cx="48" cy="30" rx="38" ry="18" fill="#ff7020"/>
+      <ellipse cx="42" cy="36" rx="24" ry="9" fill="#ffa050" opacity="0.45"/>
+      <ellipse cx="40" cy="22" rx="22" ry="6" fill="#fff" opacity="0.12"/>
+      <ellipse cx="54" cy="30" rx="14" ry="10" fill="none" stroke="#e06015" stroke-width="0.6" opacity="0.35"/>
+      <ellipse cx="36" cy="30" rx="11" ry="9" fill="none" stroke="#e06015" stroke-width="0.6" opacity="0.35"/>
+      <circle cx="18" cy="26" r="5" fill="#1a3a50"/>
+      <circle cx="18" cy="26" r="2.8" fill="#0d2030"/>
+      <circle cx="17" cy="25" r="1" fill="white"/>
+      <path d="M35 12 Q46 3 62 10 Q54 18 35 17 Z" fill="#e06015" opacity="0.8"/>
+      <path d="M30 38 Q21 48 26 53 Q37 47 39 38 Z" fill="#ff8030" opacity="0.7"/>
+      <path d="M9 31 Q12 28 15 31" stroke="#c04010" stroke-width="1.2" fill="none"/>
+      <ellipse cx="46" cy="27" rx="16" ry="8" fill="url(#fishSheen3)" opacity="0.35"/>
+      <defs>
+        <linearGradient id="fishSheen3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#80f0ff"/>
+          <stop offset="25%"  stop-color="#ff8fe8"/>
+          <stop offset="55%"  stop-color="#fff080"/>
+          <stop offset="80%"  stop-color="#80f0d0"/>
+          <stop offset="100%" stop-color="#80c0ff"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Fish 4 — tiny, swimming left -->
+  <div class="fish fish-4">
+    <svg width="40" height="26" viewBox="0 0 40 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M34 13 L40 5 L40 21 Z" fill="#d05818"/>
+      <ellipse cx="20" cy="13" rx="16" ry="8" fill="#ff8528"/>
+      <ellipse cx="17" cy="16" rx="10" ry="4" fill="#ffaa60" opacity="0.5"/>
+      <circle cx="8" cy="11" r="2.5" fill="#1a3a50"/>
+      <circle cx="8" cy="11" r="1.3" fill="#0d2030"/>
+      <circle cx="7.5" cy="10.5" r="0.5" fill="white"/>
+      <path d="M14 5 Q19 1 26 5 Q22 8 14 8 Z" fill="#d05818" opacity="0.8"/>
+      <ellipse cx="19" cy="12" rx="7" ry="3.5" fill="url(#fishSheen4)" opacity="0.35"/>
+      <defs>
+        <linearGradient id="fishSheen4" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#90ffee"/>
+          <stop offset="50%"  stop-color="#ffd080"/>
+          <stop offset="100%" stop-color="#ff90d0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Fish 5 — medium-large, swimming right, white+orange spots like the photo -->
+  <div class="fish fish-5">
+    <svg width="90" height="55" viewBox="0 0 90 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M76 27 L90 11 L90 43 Z" fill="#cc5510" opacity="0.85"/>
+      <!-- White body base (calico coloring) -->
+      <ellipse cx="43" cy="27" rx="34" ry="16" fill="#f5ede0"/>
+      <!-- Orange patches -->
+      <ellipse cx="36" cy="24" rx="14" ry="10" fill="#ff8028" opacity="0.7"/>
+      <ellipse cx="56" cy="30" rx="10" ry="8" fill="#ff6a18" opacity="0.65"/>
+      <ellipse cx="25" cy="30" rx="8" ry="6" fill="#ffa040" opacity="0.5"/>
+      <!-- sheen -->
+      <ellipse cx="38" cy="20" rx="20" ry="6" fill="#fff" opacity="0.25"/>
+      <!-- fins -->
+      <path d="M32 11 Q41 3 56 9 Q49 17 32 16 Z" fill="#f08030" opacity="0.75"/>
+      <path d="M28 35 Q20 45 24 49 Q33 44 35 35 Z" fill="#f09050" opacity="0.65"/>
+      <!-- tail tips -->
+      <path d="M78 27 Q90 11 90 11 M78 27 Q90 43 90 43" stroke="#dd6618" stroke-width="1" fill="none"/>
+      <!-- eye -->
+      <circle cx="16" cy="24" r="4.5" fill="#1a3a50"/>
+      <circle cx="16" cy="24" r="2.5" fill="#0d2030"/>
+      <circle cx="15" cy="23" r="0.9" fill="white"/>
+      <!-- mouth -->
+      <path d="M7 27 Q10 24 13 27" stroke="#c04010" stroke-width="1" fill="none"/>
+      <!-- rainbow sheen -->
+      <ellipse cx="42" cy="25" rx="15" ry="7" fill="url(#fishSheen5)" opacity="0.28"/>
+      <defs>
+        <linearGradient id="fishSheen5" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#70f8ff"/>
+          <stop offset="30%"  stop-color="#ffe880"/>
+          <stop offset="60%"  stop-color="#ffa0e0"/>
+          <stop offset="100%" stop-color="#80d8ff"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+</div>
 
 <!-- NAV -->
 <nav>
@@ -482,8 +932,9 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
+  <div class="hero-prism-1"></div>
+  <div class="hero-prism-2"></div>
+  <div class="hero-prism-3"></div>
   <div class="hero-inner">
     <div class="hero-left fade-in">
       <div class="hero-tag">AI & Machine Learning Engineer</div>
@@ -495,19 +946,19 @@
       </div>
     </div>
     <div class="hero-stats fade-in" style="transition-delay:0.2s">
-      <div class="stat-card">
+      <div class="stat-card glass">
         <div class="stat-number">2×</div>
         <div class="stat-label">International Research Internships</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card glass">
         <div class="stat-number">94%</div>
         <div class="stat-label">Signal Accuracy Improvement — NTT Japan</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card glass">
         <div class="stat-number">68%</div>
         <div class="stat-label">IoU — SegFormer Honours Thesis</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card glass">
         <div class="stat-number">1</div>
         <div class="stat-label">Peer-Reviewed Publication (Submitted)</div>
       </div>
@@ -540,23 +991,23 @@
         </div>
       </div>
       <div class="about-awards fade-in" style="transition-delay:0.15s">
-        <div class="award-item">
+        <div class="award-item glass-lighter">
           <div class="award-title">🎓 Beasiswa Indonesia Maju (BIM) Scholarship</div>
           <div class="award-meta">Indonesian Government · ~$331,200 CAD · Full 4-Year Award</div>
         </div>
-        <div class="award-item">
+        <div class="award-item glass-lighter">
           <div class="award-title">🥈 2nd Place — Hack-Attack: Girls in Tech Hackathon</div>
           <div class="award-meta">UBC Okanagan · Mar 2024</div>
         </div>
-        <div class="award-item">
+        <div class="award-item glass-lighter">
           <div class="award-title">🥉 Bronze + Best Poster — Asia Pacific Young Scientists</div>
           <div class="award-meta">International Competition · Feb 2021</div>
         </div>
-        <div class="award-item">
+        <div class="award-item glass-lighter">
           <div class="award-title">🥇 Gold — 7th International Young Inventors Award</div>
           <div class="award-meta">International Competition · Nov 2020</div>
         </div>
-        <div class="award-item">
+        <div class="award-item glass-lighter">
           <div class="award-title">🥇 Gold — 6th International Young Inventors Award</div>
           <div class="award-meta">International Competition · Oct 2019</div>
         </div>
@@ -634,7 +1085,7 @@
     </div>
     <div class="projects-grid">
 
-      <div class="project-card featured fade-in">
+      <div class="project-card glass featured fade-in">
         <div>
           <div class="project-num">01 · HONOURS THESIS</div>
           <div class="project-type">Computer Vision · Remote Sensing</div>
@@ -651,7 +1102,7 @@
         </div>
       </div>
 
-      <div class="project-card fade-in">
+      <div class="project-card glass fade-in">
         <div class="project-num">02 · CAPSTONE</div>
         <div class="project-type">Full-Stack ML · Deployment</div>
         <div class="project-title">AI-Driven Aesthetic Assessment System</div>
@@ -663,7 +1114,7 @@
         </div>
       </div>
 
-      <div class="project-card fade-in" style="transition-delay:0.1s">
+      <div class="project-card glass fade-in" style="transition-delay:0.1s">
         <div class="project-num">03 · HACKATHON · 2nd PLACE</div>
         <div class="project-type">GenAI · Voice Interface</div>
         <div class="project-title">AI-Powered Customer Service Kiosk</div>
@@ -675,7 +1126,7 @@
         </div>
       </div>
 
-      <div class="project-card fade-in" style="transition-delay:0.15s">
+      <div class="project-card glass fade-in" style="transition-delay:0.15s">
         <div class="project-num">04 · SOFTWARE ENGINEERING</div>
         <div class="project-type">Web App · Environmental</div>
         <div class="project-title">BlueBuffalo — Air Pollution Monitoring Platform</div>
@@ -700,7 +1151,7 @@
       <div class="section-line"></div>
     </div>
     <div class="skills-grid">
-      <div class="skill-category fade-in">
+      <div class="skill-category glass fade-in">
         <div class="skill-cat-title">ML & Deep Learning</div>
         <div class="skill-list">
           <span class="skill-pill">PyTorch</span><span class="skill-pill">TensorFlow</span><span class="skill-pill">Keras</span>
@@ -708,7 +1159,7 @@
           <span class="skill-pill">Swin Transformer</span><span class="skill-pill">CNN</span><span class="skill-pill">LSTM</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.05s">
+      <div class="skill-category glass fade-in" style="transition-delay:0.05s">
         <div class="skill-cat-title">Computer Vision</div>
         <div class="skill-list">
           <span class="skill-pill">OpenCV</span><span class="skill-pill">scikit-image</span><span class="skill-pill">NumPy</span>
@@ -716,7 +1167,7 @@
           <span class="skill-pill">Remote Sensing</span><span class="skill-pill">Sentinel-2</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.1s">
+      <div class="skill-category glass fade-in" style="transition-delay:0.1s">
         <div class="skill-cat-title">GenAI & LLMs</div>
         <div class="skill-list">
           <span class="skill-pill">Gemini API</span><span class="skill-pill">Prompt Engineering</span>
@@ -724,7 +1175,7 @@
           <span class="skill-pill">API-Driven AI Products</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.15s">
+      <div class="skill-category glass fade-in" style="transition-delay:0.15s">
         <div class="skill-cat-title">MLOps & Infrastructure</div>
         <div class="skill-list">
           <span class="skill-pill">Docker</span><span class="skill-pill">Docker Compose</span><span class="skill-pill">Git</span>
@@ -732,7 +1183,7 @@
           <span class="skill-pill">Jupyter</span><span class="skill-pill">CI/CD</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.2s">
+      <div class="skill-category glass fade-in" style="transition-delay:0.2s">
         <div class="skill-cat-title">Programming</div>
         <div class="skill-list">
           <span class="skill-pill">Python</span><span class="skill-pill">TypeScript</span><span class="skill-pill">JavaScript</span>
@@ -740,7 +1191,7 @@
           <span class="skill-pill">SQL</span><span class="skill-pill">Bash</span><span class="skill-pill">PHP</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.25s">
+      <div class="skill-category glass fade-in" style="transition-delay:0.25s">
         <div class="skill-cat-title">Full-Stack & Frameworks</div>
         <div class="skill-list">
           <span class="skill-pill">React</span><span class="skill-pill">Next.js</span><span class="skill-pill">Node.js</span>
@@ -760,7 +1211,7 @@
       <h2 class="section-title">Publication</h2>
       <div class="section-line"></div>
     </div>
-    <div class="pub-card fade-in">
+    <div class="pub-card glass fade-in">
       <div class="pub-label">Submitted · 2025 · Peer-Reviewed Journal</div>
       <div class="pub-title">Remote Sensing and Artificial Intelligence for Integrated Analysis of Mangrove Dynamics and Blue Carbon Potential</div>
       <div class="pub-meta">
@@ -776,15 +1227,15 @@
   <h2 class="contact-title">Open to <em>opportunities</em><br/>from May 2026</h2>
   <p class="contact-sub">Seeking ML Engineer, Computer Vision, or Data Science roles. Based in Canada, open to remote &amp; relocation.</p>
   <div class="contact-links">
-    <a href="mailto:putrileksono1@gmail.com" class="contact-link">
+    <a href="mailto:putrileksono1@gmail.com" class="contact-link glass">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
       putrileksono1@gmail.com
     </a>
-    <a href="https://linkedin.com/in/putrileksono" target="_blank" class="contact-link">
+    <a href="https://linkedin.com/in/putrileksono" target="_blank" class="contact-link glass">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
       linkedin.com/in/putrileksono
     </a>
-    <a href="https://github.com/puyangogju" target="_blank" class="contact-link">
+    <a href="https://github.com/puyangogju" target="_blank" class="contact-link glass">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
       github.com/puyangogju
     </a>
@@ -796,10 +1247,36 @@
 </footer>
 
 <script>
+  /* Fade-in on scroll */
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  /* Parallax fish depth effect on mousemove */
+  const fishEls = document.querySelectorAll('.fish');
+  document.addEventListener('mousemove', (e) => {
+    const mx = (e.clientX / window.innerWidth - 0.5) * 2;
+    const my = (e.clientY / window.innerHeight - 0.5) * 2;
+    fishEls.forEach((fish, i) => {
+      const depth = (i % 3 + 1) * 4;
+      fish.style.marginTop = (my * depth) + 'px';
+    });
+  });
+
+  /* Subtle caustic brightness pulse based on scroll */
+  const causticRays = document.querySelectorAll('.caustic-ray');
+  window.addEventListener('scroll', () => {
+    const scrollFrac = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    causticRays.forEach((ray, i) => {
+      ray.style.opacity = 0.4 + Math.sin(scrollFrac * Math.PI * 4 + i) * 0.3;
+    });
+  });
 </script>
 </body>
 </html>
