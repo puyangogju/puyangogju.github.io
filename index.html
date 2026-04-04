@@ -1,219 +1,776 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Putri Larasati Leksono — AI & ML Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-  :root {
-    --bg: #080C14;
-    --surface: #0E1420;
-    --surface2: #141C2E;
-    --border: #1E2A42;
-    --accent: #3B82F6;
-    --accent2: #60A5FA;
-    --accent3: #93C5FD;
-    --gold: #F59E0B;
-    --teal: #14B8A6;
-    --teal2: #2DD4BF;
-    --text: #E8EDF5;
-    --muted: #8A9BB8;
-    --dim: #4A5B7A;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-  }
+/* ═══════════════════════════════════════════════════════
+   FRUTIGER AERO / AQUA — THEME TOKENS
+   ═══════════════════════════════════════════════════════ */
 
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 0; opacity: 0.4;
-  }
+[data-theme="dark"] {
+  --bg-0:          #03101e;
+  --bg-1:          #051b30;
+  --bg-2:          #082240;
+  --ocean-ray:     rgba(0,200,232,0.10);
+  --glass:         rgba(8, 35, 62, 0.50);
+  --glass-border:  rgba(255,255,255,0.14);
+  --glass-sheen:   rgba(255,255,255,0.07);
+  --text:          #e4f4fb;
+  --muted:         #90c8da;
+  --dim:           #4a8faa;
+  --accent:        #00c8e8;
+  --accent2:       #7de8f5;
+  --accent3:       #c4f2f8;
+  --fish-orange:   #ff7c2a;
+  --fish-light:    #ffb06a;
+  --teal:          #14c4a8;
+  --teal2:         #5de8d0;
+  --gold:          #f9c84a;
+  --section-alt:   rgba(0,20,40,0.4);
+  --bubble-bg:     rgba(200,240,255,0.18);
+  --bubble-border: rgba(255,255,255,0.28);
+  --nav-bg:        rgba(3,16,30,0.80);
+  --nav-border:    rgba(0,200,232,0.18);
+  --toggle-icon:   "☀️";
+}
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.2rem 3rem;
-    background: rgba(8,12,20,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo { font-family: 'DM Mono', monospace; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; }
-  .nav-links { display: flex; gap: 2.5rem; }
-  .nav-links a { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--accent2); }
-  .nav-cta { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--accent); border: 1px solid var(--accent); padding: 0.45rem 1.2rem; text-decoration: none; letter-spacing: 0.08em; transition: all 0.2s; }
-  .nav-cta:hover { background: var(--accent); color: #fff; }
+[data-theme="light"] {
+  --bg-0:          #c8ecff;
+  --bg-1:          #daf3ff;
+  --bg-2:          #edfaff;
+  --ocean-ray:     rgba(0,140,200,0.12);
+  --glass:         rgba(255,255,255,0.60);
+  --glass-border:  rgba(0,150,210,0.22);
+  --glass-sheen:   rgba(255,255,255,0.50);
+  --text:          #062035;
+  --muted:         #1a5070;
+  --dim:           #3a80a0;
+  --accent:        #0090c0;
+  --accent2:       #00b8e0;
+  --accent3:       #006090;
+  --fish-orange:   #e86018;
+  --fish-light:    #ff9050;
+  --teal:          #00a888;
+  --teal2:         #007a68;
+  --gold:          #c89010;
+  --section-alt:   rgba(200,235,255,0.5);
+  --bubble-bg:     rgba(255,255,255,0.35);
+  --bubble-border: rgba(100,200,240,0.5);
+  --nav-bg:        rgba(200,240,255,0.75);
+  --nav-border:    rgba(0,140,200,0.25);
+  --toggle-icon:   "🌙";
+}
 
-  /* HERO */
-  .hero { min-height: 100vh; display: flex; align-items: center; padding: 7rem 3rem 4rem; position: relative; overflow: hidden; }
-  .hero-glow { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%); top: -200px; right: -200px; pointer-events: none; }
-  .hero-glow2 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%); bottom: -100px; left: 10%; pointer-events: none; }
-  .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-  .hero-tag { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
-  .hero-tag::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--accent); }
-  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.05; color: var(--text); margin-bottom: 1.5rem; }
-  .hero h1 em { font-style: italic; color: var(--accent2); }
-  .hero-desc { font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 2.5rem; max-width: 480px; }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary { background: var(--accent); color: #fff; padding: 0.85rem 2rem; font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.08em; text-decoration: none; transition: all 0.2s; display: inline-block; }
-  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
-  .btn-secondary { border: 1px solid var(--border); color: var(--muted); padding: 0.85rem 2rem; font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.08em; text-decoration: none; transition: all 0.2s; display: inline-block; }
-  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+/* ═══════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-  .hero-stats { display: flex; flex-direction: column; gap: 1.2rem; padding-left: 2rem; border-left: 1px solid var(--border); }
-  .stat-card { background: var(--surface); border: 1px solid var(--border); padding: 1.4rem 1.6rem; transition: border-color 0.2s; }
-  .stat-card:hover { border-color: var(--accent); }
-  .stat-number { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--accent2); line-height: 1; margin-bottom: 0.3rem; }
-  .stat-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.15em; }
+body {
+  background: var(--bg-0);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  transition: background 0.4s, color 0.4s;
+}
 
-  /* SECTIONS */
-  section { padding: 6rem 3rem; position: relative; }
-  .section-inner { max-width: 1100px; margin: 0 auto; }
-  .section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3.5rem; }
-  .section-num { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--dim); letter-spacing: 0.15em; }
-  .section-title { font-family: 'DM Serif Display', serif; font-size: 2.5rem; color: var(--text); }
-  .section-line { flex: 1; height: 1px; background: var(--border); }
+/* ═══════════════════════════════════════════════════════
+   UNDERWATER BACKGROUND
+   ═══════════════════════════════════════════════════════ */
+.ocean-bg {
+  position: fixed; inset: 0; z-index: -3;
+  transition: background 0.5s;
+}
+[data-theme="dark"] .ocean-bg {
+  background:
+    radial-gradient(ellipse at 20% 8%,  rgba(0,120,200,0.30) 0%, transparent 50%),
+    radial-gradient(ellipse at 78% 18%, rgba(0,70,150,0.20) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 85%, rgba(0,30,80,0.40)  0%, transparent 55%),
+    linear-gradient(180deg, #03101e 0%, #051b30 45%, #03101e 100%);
+}
+[data-theme="light"] .ocean-bg {
+  background:
+    radial-gradient(ellipse at 25% 5%,  rgba(255,255,255,0.70) 0%, transparent 40%),
+    radial-gradient(ellipse at 75% 10%, rgba(180,230,255,0.60) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 60%, rgba(100,200,240,0.25) 0%, transparent 60%),
+    linear-gradient(180deg, #c8ecff 0%, #b0e0f8 30%, #a0d8f4 60%, #c8ecff 100%);
+}
 
-  /* ABOUT */
-  #about { background: var(--surface); }
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-  .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1.2rem; }
-  .about-text p strong { color: var(--text); font-weight: 500; }
-  .about-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
-  .chip { font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.3rem 0.8rem; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.08em; }
-  .chip.accent { border-color: rgba(59,130,246,0.4); color: var(--accent3); }
-  .chip.teal { border-color: rgba(20,184,166,0.4); color: var(--teal2); }
-  .about-awards { display: flex; flex-direction: column; gap: 1rem; }
-  .award-item { padding: 1rem 1.2rem; border-left: 2px solid var(--border); transition: border-color 0.2s; }
-  .award-item:hover { border-color: var(--gold); }
-  .award-title { font-size: 0.9rem; color: var(--text); margin-bottom: 0.3rem; }
-  .award-meta { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--dim); letter-spacing: 0.05em; }
+/* Caustic light rays */
+.caustics { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
+.caustic-ray {
+  position: absolute; top: -20%; width: 2px; height: 130%;
+  background: linear-gradient(180deg, transparent 0%, var(--ocean-ray) 35%, transparent 100%);
+  transform-origin: top center;
+  animation: sway-ray 9s ease-in-out infinite;
+  filter: blur(2px);
+}
+.caustic-ray:nth-child(1)  { left: 7%;  width:3px; animation-duration:9s;   animation-delay:0s;   }
+.caustic-ray:nth-child(2)  { left:16%;  width:1px; animation-duration:7s;   animation-delay:1.3s; }
+.caustic-ray:nth-child(3)  { left:26%;  width:4px; animation-duration:11s;  animation-delay:0.6s; opacity:.7; }
+.caustic-ray:nth-child(4)  { left:37%;  width:2px; animation-duration:8.5s; animation-delay:2.1s; }
+.caustic-ray:nth-child(5)  { left:49%;  width:5px; animation-duration:12s;  animation-delay:0.9s; opacity:.5; }
+.caustic-ray:nth-child(6)  { left:61%;  width:2px; animation-duration:7.5s; animation-delay:1.8s; }
+.caustic-ray:nth-child(7)  { left:72%;  width:3px; animation-duration:10s;  animation-delay:0.4s; }
+.caustic-ray:nth-child(8)  { left:84%;  width:1px; animation-duration:8s;   animation-delay:2.6s; }
+.caustic-ray:nth-child(9)  { left:91%;  width:4px; animation-duration:10.5s;animation-delay:1.1s; opacity:.6; }
+@keyframes sway-ray {
+  0%,100% { transform: rotate(-4deg) scaleX(1);   opacity: .55; }
+  33%      { transform: rotate( 5deg) scaleX(1.4); opacity: 1;   }
+  66%      { transform: rotate(-2deg) scaleX(0.8); opacity: .35; }
+}
 
-  /* EXPERIENCE */
-  .exp-grid { display: flex; flex-direction: column; gap: 3rem; }
-  .exp-item { display: grid; grid-template-columns: 160px 1fr; gap: 2rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-  .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
-  .exp-meta { display: flex; flex-direction: column; gap: 0.4rem; padding-top: 0.2rem; }
-  .exp-period { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--accent); }
-  .exp-location { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--dim); }
-  .exp-flag { font-size: 1.4rem; margin-top: 0.5rem; }
-  .exp-org { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
-  .exp-role { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); margin-bottom: 0.5rem; }
-  .exp-research { font-size: 0.85rem; color: var(--accent2); font-style: italic; margin-bottom: 1rem; padding: 0.5rem 0.8rem; border-left: 2px solid var(--accent); background: rgba(59,130,246,0.05); }
-  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
-  .exp-bullets li { font-size: 0.9rem; color: var(--muted); line-height: 1.7; padding-left: 1rem; position: relative; }
-  .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--dim); }
-  .exp-bullets li strong { color: var(--text); font-weight: 500; }
-  .exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .tag { font-family: 'DM Mono', monospace; font-size: 0.65rem; padding: 0.2rem 0.6rem; background: var(--surface2); border: 1px solid var(--border); color: var(--dim); letter-spacing: 0.05em; }
+/* ═══════════════════════════════════════════════════════
+   BUBBLES
+   ═══════════════════════════════════════════════════════ */
+.bubbles { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.bubble {
+  position: absolute; bottom: -40px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--bubble-bg), transparent 70%);
+  border: 1px solid var(--bubble-border);
+  animation: rise-bubble linear infinite;
+  transition: background 0.5s, border-color 0.5s;
+}
+.bubble:nth-child(1)  { width:8px;  height:8px;  left:5%;  animation-duration:13s; animation-delay:0s;   }
+.bubble:nth-child(2)  { width:5px;  height:5px;  left:13%; animation-duration:9s;  animation-delay:2.2s; }
+.bubble:nth-child(3)  { width:12px; height:12px; left:21%; animation-duration:15s; animation-delay:1.1s; }
+.bubble:nth-child(4)  { width:4px;  height:4px;  left:31%; animation-duration:10s; animation-delay:3.3s; }
+.bubble:nth-child(5)  { width:9px;  height:9px;  left:43%; animation-duration:12s; animation-delay:0.5s; }
+.bubble:nth-child(6)  { width:6px;  height:6px;  left:55%; animation-duration:14s; animation-delay:1.9s; }
+.bubble:nth-child(7)  { width:14px; height:14px; left:64%; animation-duration:16s; animation-delay:0.3s; }
+.bubble:nth-child(8)  { width:5px;  height:5px;  left:73%; animation-duration:8s;  animation-delay:2.7s; }
+.bubble:nth-child(9)  { width:10px; height:10px; left:81%; animation-duration:13s; animation-delay:1.0s; }
+.bubble:nth-child(10) { width:7px;  height:7px;  left:91%; animation-duration:11s; animation-delay:3.6s; }
+.bubble:nth-child(11) { width:3px;  height:3px;  left:36%; animation-duration:9s;  animation-delay:4.2s; }
+.bubble:nth-child(12) { width:11px; height:11px; left:48%; animation-duration:17s; animation-delay:0.8s; }
+@keyframes rise-bubble {
+  0%   { transform: translateY(0) translateX(0);   opacity: 0;   }
+  10%  { opacity: .7; }
+  50%  { transform: translateY(-50vh) translateX(14px); opacity: .45; }
+  90%  { opacity: .25; }
+  100% { transform: translateY(-112vh) translateX(-8px); opacity: 0; }
+}
 
-  /* PROJECTS */
-  #projects { background: var(--surface); }
-  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-  .project-card { background: var(--bg); border: 1px solid var(--border); padding: 2rem; transition: all 0.25s; position: relative; overflow: hidden; }
-  .project-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(59,130,246,0.03) 0%, transparent 60%); pointer-events: none; }
-  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-  .project-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .project-card.engineering { border-color: rgba(20,184,166,0.3); }
-  .project-card.engineering::before { background: linear-gradient(135deg, rgba(20,184,166,0.04) 0%, transparent 60%); }
-  .project-card.engineering:hover { border-color: var(--teal); }
-  .project-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--dim); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .project-num.eng-num { color: var(--teal); opacity: 0.7; }
-  .project-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--text); margin-bottom: 0.5rem; line-height: 1.3; }
-  .project-type { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-bottom: 0.8rem; letter-spacing: 0.08em; }
-  .project-type.eng-type { color: var(--teal2); }
-  .project-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.2rem; }
-  .project-metric { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--accent); padding: 0.4rem 0.8rem; background: rgba(59,130,246,0.08); border-left: 2px solid var(--accent); margin-bottom: 1rem; }
-  .project-metric.eng-metric { color: var(--teal2); background: rgba(20,184,166,0.08); border-color: var(--teal); }
+/* ═══════════════════════════════════════════════════════
+   FISH  (all fish face the direction they swim)
+   ═══════════════════════════════════════════════════════ */
+.fish-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.fish { position: absolute; filter: drop-shadow(0 0 8px rgba(255,150,60,.50)); }
+.fish svg { display: block; animation: fish-wobble 1.3s ease-in-out infinite; }
+@keyframes fish-wobble {
+  0%,100% { transform: translateY(0)   rotate(-1.5deg); }
+  50%      { transform: translateY(-4px) rotate( 1.5deg); }
+}
 
-  /* ENGINEERING SECTION */
-  #engineering { background: var(--bg); }
-  .eng-intro { font-size: 1rem; color: var(--muted); line-height: 1.8; max-width: 680px; margin-bottom: 3rem; }
-  .eng-intro strong { color: var(--text); }
-  .eng-context { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
-  .eng-context-card { background: var(--surface); border: 1px solid var(--border); padding: 1.8rem; border-left: 3px solid var(--teal); }
-  .eng-context-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--teal2); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem; }
-  .eng-context-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--text); margin-bottom: 0.5rem; }
-  .eng-context-sub { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-  .eng-tools { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-  .eng-projects-header { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--dim); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
-  .pltl-card { background: var(--surface); border: 1px solid rgba(20,184,166,0.25); padding: 2.5rem; position: relative; overflow: hidden; }
-  .pltl-card::after { content: 'PLTL'; position: absolute; right: -1rem; top: 50%; transform: translateY(-50%) rotate(90deg); font-family: 'DM Serif Display', serif; font-size: 6rem; color: rgba(20,184,166,0.04); pointer-events: none; white-space: nowrap; }
-  .pltl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .pltl-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--teal2); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .pltl-title { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--text); line-height: 1.2; margin-bottom: 0.4rem; }
-  .pltl-title em { color: var(--teal2); font-style: italic; }
-  .pltl-org { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--dim); margin-bottom: 1.2rem; }
-  .pltl-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.5rem; }
-  .pltl-specs { display: flex; flex-direction: column; gap: 0.8rem; }
-  .spec-row { display: flex; gap: 1rem; align-items: baseline; }
-  .spec-key { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--teal2); letter-spacing: 0.1em; min-width: 100px; text-transform: uppercase; }
-  .spec-val { font-size: 0.85rem; color: var(--muted); }
-  .spec-val strong { color: var(--text); font-weight: 500; }
+/* Right-swimming fish (LTR) */
+.fish-r { animation: swim-ltr linear infinite; }
+@keyframes swim-ltr {
+  from { left: -130px; }
+  to   { left: 115%;  }
+}
+/* Left-swimming fish (RTL) — no CSS flip, SVG is pre-mirrored */
+.fish-l { animation: swim-rtl linear infinite; right: -130px; left: auto; }
+@keyframes swim-rtl {
+  from { right: -130px; }
+  to   { right: 115%;  }
+}
 
-  /* SKILLS */
-  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .skill-category { background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; }
-  .skill-cat-title { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
-  .skill-cat-title.teal { color: var(--teal2); }
-  .skill-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .skill-pill { font-family: 'DM Mono', monospace; font-size: 0.65rem; padding: 0.25rem 0.6rem; border: 1px solid var(--border); color: var(--dim); transition: all 0.2s; }
-  .skill-pill:hover { border-color: var(--accent); color: var(--accent3); }
-  .skill-pill.teal-pill:hover { border-color: var(--teal); color: var(--teal2); }
+.fish-1 { top: 14%; animation-duration: 30s; animation-delay: 0s;   }
+.fish-2 { top: 36%; animation-duration: 23s; animation-delay: 8s;   }
+.fish-3 { top: 57%; animation-duration: 38s; animation-delay: 3s;   }
+.fish-4 { top: 74%; animation-duration: 21s; animation-delay: 14s;  }
+.fish-5 { top: 26%; animation-duration: 34s; animation-delay: 20s;  }
 
-  /* PUBLICATION */
-  .pub-card { background: var(--surface); border: 1px solid var(--border); padding: 2rem 2.5rem; border-left: 3px solid var(--accent); }
-  .pub-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.8rem; }
-  .pub-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); margin-bottom: 0.8rem; line-height: 1.4; }
-  .pub-meta { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-  .pub-meta em { color: var(--accent2); }
+/* ═══════════════════════════════════════════════════════
+   GLASSMORPHISM
+   ═══════════════════════════════════════════════════════ */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.25), inset 0 1px 0 var(--glass-sheen);
+  transition: background 0.4s, border-color 0.4s;
+}
+.glass-sm {
+  background: var(--glass);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.18), inset 0 1px 0 var(--glass-sheen);
+  transition: background 0.4s, border-color 0.4s;
+}
 
-  /* CONTACT */
-  #contact { text-align: center; padding: 8rem 3rem; background: var(--surface); }
-  .contact-label { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; }
-  .contact-title { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--text); line-height: 1.1; margin-bottom: 1.5rem; }
-  .contact-title em { color: var(--accent2); font-style: italic; }
-  .contact-sub { font-size: 1rem; color: var(--muted); margin-bottom: 3rem; }
-  .contact-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
-  .contact-link { display: flex; align-items: center; gap: 0.6rem; color: var(--muted); text-decoration: none; font-family: 'DM Mono', monospace; font-size: 0.8rem; transition: color 0.2s; }
-  .contact-link svg { width: 18px; height: 18px; }
-  .contact-link:hover { color: var(--accent2); }
+/* ═══════════════════════════════════════════════════════
+   NAV
+   ═══════════════════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 3rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  border-bottom: 1px solid var(--nav-border);
+  transition: background 0.4s, border-color 0.4s;
+}
+.nav-logo {
+  font-family: 'DM Mono', monospace; font-size: .85rem;
+  letter-spacing: .22em; text-transform: uppercase;
+  background: linear-gradient(135deg, var(--accent), var(--fish-orange));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 6px rgba(0,200,232,.35));
+}
+.nav-links { display: flex; gap: 2.2rem; }
+.nav-links a {
+  font-family: 'DM Mono', monospace; font-size: .73rem;
+  color: var(--muted); text-decoration: none;
+  letter-spacing: .1em; text-transform: uppercase;
+  transition: color .25s;
+}
+.nav-links a:hover { color: var(--accent2); }
+.nav-right { display: flex; align-items: center; gap: .8rem; }
+.nav-cta {
+  font-family: 'DM Mono', monospace; font-size: .72rem;
+  color: var(--accent); border: 1px solid var(--accent);
+  padding: .42rem 1.1rem; text-decoration: none; letter-spacing: .08em;
+  border-radius: 20px;
+  background: rgba(0,200,232,.07);
+  transition: all .25s;
+}
+.nav-cta:hover { background: rgba(0,200,232,.2); box-shadow: 0 0 18px rgba(0,200,232,.3); color: #fff; }
 
-  footer { text-align: center; padding: 2rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--dim); border-top: 1px solid var(--border); }
+/* Dark/Light toggle */
+.theme-toggle {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: .38rem .75rem;
+  cursor: pointer;
+  font-size: .78rem;
+  color: var(--muted);
+  transition: all .25s;
+  display: flex; align-items: center; gap: .35rem;
+  backdrop-filter: blur(8px);
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle .toggle-sun  { display: none; }
+.theme-toggle .toggle-moon { display: inline; }
+[data-theme="light"] .theme-toggle .toggle-sun  { display: inline; }
+[data-theme="light"] .theme-toggle .toggle-moon { display: none; }
 
-  /* ANIMATIONS */
-  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .fade-in.visible { opacity: 1; transform: none; }
+/* ═══════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 7rem 3rem 4rem; position: relative; overflow: hidden;
+}
+.hero-blob {
+  position: absolute; pointer-events: none; border-radius: 50%;
+  animation: blob-pulse 8s ease-in-out infinite; filter: blur(55px);
+}
+.hero-blob-1 {
+  width: 520px; height: 520px; top: -120px; right: -160px;
+  background: radial-gradient(circle, rgba(0,140,210,.22), rgba(0,60,140,.08) 55%, transparent 70%);
+  animation-duration: 8s;
+}
+.hero-blob-2 {
+  width: 320px; height: 320px; bottom: -60px; left: 6%;
+  background: radial-gradient(circle, rgba(255,124,42,.10), transparent 70%);
+  animation-duration: 11s; animation-delay: 2s;
+}
+.hero-blob-3 {
+  width: 260px; height: 260px; top: 35%; left: 38%;
+  background: radial-gradient(circle, rgba(80,210,255,.08), transparent 70%);
+  animation-duration: 13s; animation-delay: 1s;
+}
+@keyframes blob-pulse {
+  0%,100% { opacity: .35; transform: scale(1);    }
+  50%      { opacity: .65; transform: scale(1.12); }
+}
+.hero-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  position: relative; z-index: 1;
+}
+.hero-tag {
+  font-family: 'DM Mono', monospace; font-size: .72rem;
+  color: var(--accent); letter-spacing: .22em; text-transform: uppercase;
+  margin-bottom: 1.4rem; display: flex; align-items: center; gap: .7rem;
+}
+.hero-tag::before {
+  content: ''; display: block; width: 2rem; height: 1px;
+  background: linear-gradient(to right, var(--accent), transparent);
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.6rem, 4.8vw, 4.2rem); line-height: 1.07;
+  color: var(--text); margin-bottom: 1.4rem;
+}
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--fish-orange), var(--fish-light) 50%, var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 10px rgba(255,124,42,.35));
+}
+.hero-desc {
+  font-size: .97rem; color: var(--muted); line-height: 1.85;
+  margin-bottom: 2.4rem; max-width: 480px;
+}
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), rgba(0,80,180,.9));
+  color: #fff; padding: .82rem 1.9rem;
+  font-family: 'DM Mono', monospace; font-size: .78rem; letter-spacing: .08em;
+  text-decoration: none; border-radius: 24px;
+  border: 1px solid rgba(0,200,232,.35);
+  box-shadow: 0 4px 18px rgba(0,140,200,.3), inset 0 1px 0 rgba(255,255,255,.15);
+  transition: all .25s; display: inline-block;
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 28px rgba(0,200,232,.5); transform: translateY(-2px);
+}
+.btn-secondary {
+  border: 1px solid var(--glass-border); color: var(--muted);
+  padding: .82rem 1.9rem; font-family: 'DM Mono', monospace;
+  font-size: .78rem; letter-spacing: .08em; text-decoration: none;
+  border-radius: 24px; background: var(--glass);
+  backdrop-filter: blur(8px); transition: all .25s; display: inline-block;
+}
+.btn-secondary:hover {
+  border-color: var(--teal); color: var(--teal2);
+  background: rgba(0,200,180,.08);
+  box-shadow: 0 4px 16px rgba(0,200,180,.2); transform: translateY(-2px);
+}
+.hero-stats {
+  display: flex; flex-direction: column; gap: .95rem;
+  padding-left: 2rem; border-left: 1px solid var(--glass-border);
+}
+.stat-card {
+  padding: 1.25rem 1.45rem; transition: transform .25s, box-shadow .25s; cursor: default;
+}
+.stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,.35), 0 0 18px rgba(0,200,232,.12); }
+.stat-number {
+  font-family: 'DM Serif Display', serif; font-size: 2rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1; margin-bottom: .25rem;
+}
+.stat-label {
+  font-family: 'DM Mono', monospace; font-size: .67rem;
+  color: var(--dim); text-transform: uppercase; letter-spacing: .12em;
+}
 
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    section { padding: 4rem 1.5rem; }
-    .hero-inner { grid-template-columns: 1fr; }
-    .hero-stats { padding-left: 0; border-left: none; border-top: 1px solid var(--border); padding-top: 2rem; }
-    .about-grid { grid-template-columns: 1fr; }
-    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
-    .skills-grid { grid-template-columns: 1fr; }
-    .eng-context { grid-template-columns: 1fr; }
-    .pltl-grid { grid-template-columns: 1fr; }
-  }
+/* ═══════════════════════════════════════════════════════
+   SHARED SECTION
+   ═══════════════════════════════════════════════════════ */
+section { padding: 6rem 3rem; position: relative; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-header { display: flex; align-items: baseline; gap: 1.4rem; margin-bottom: 3.2rem; }
+.section-num { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--fish-orange); letter-spacing: .15em; }
+.section-title { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--text); }
+.section-line { flex: 1; height: 1px; background: linear-gradient(to right, var(--glass-border), transparent); }
+
+#about, #projects, #publication { background: var(--section-alt); }
+
+/* ═══════════════════════════════════════════════════════
+   ABOUT
+   ═══════════════════════════════════════════════════════ */
+.about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: start; }
+.about-text p { color: var(--muted); line-height: 1.9; font-size: .94rem; margin-bottom: 1.15rem; }
+.about-text p strong { color: var(--text); font-weight: 500; }
+.about-text p em { color: var(--teal2); font-style: italic; }
+.about-chips { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.4rem; }
+.chip {
+  font-family: 'DM Mono', monospace; font-size: .68rem;
+  padding: .28rem .75rem; border-radius: 20px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: var(--muted); letter-spacing: .05em;
+  backdrop-filter: blur(4px); transition: all .2s;
+}
+.chip:hover { border-color: var(--accent); color: var(--accent2); }
+.chip.accent { border-color: rgba(0,200,232,.35); color: var(--accent2); background: rgba(0,200,232,.07); }
+.chip.teal   { border-color: rgba(20,196,168,.35); color: var(--teal2);   background: rgba(20,196,168,.07); }
+.about-awards { display: flex; flex-direction: column; gap: .85rem; }
+.award-item {
+  padding: 1rem 1.2rem; border-left: 3px solid var(--gold);
+  transition: transform .2s, box-shadow .2s;
+}
+.award-item:hover { transform: translateX(3px); }
+.award-title { font-size: .83rem; color: var(--text); font-weight: 500; margin-bottom: .22rem; }
+.award-meta { font-family: 'DM Mono', monospace; font-size: .67rem; color: var(--dim); letter-spacing: .05em; }
+
+/* ═══════════════════════════════════════════════════════
+   EXPERIENCE
+   ═══════════════════════════════════════════════════════ */
+.exp-grid { display: flex; flex-direction: column; }
+.exp-item {
+  display: grid; grid-template-columns: 200px 1fr;
+  border-top: 1px solid var(--glass-border);
+  padding: 2.4rem 0; gap: 2.4rem;
+}
+.exp-period { font-family: 'DM Mono', monospace; font-size: .69rem; color: var(--accent); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .35rem; }
+.exp-location { font-family: 'DM Mono', monospace; font-size: .69rem; color: var(--dim); letter-spacing: .05em; }
+.exp-flag { font-size: 1.4rem; margin-top: .5rem; }
+.exp-org { font-size: .71rem; color: var(--accent2); font-family: 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .3rem; }
+.exp-role { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); margin-bottom: .3rem; }
+.exp-research { font-size: .84rem; color: var(--muted); margin-bottom: 1.1rem; font-style: italic; }
+.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
+.exp-bullets li { display: flex; gap: .72rem; font-size: .87rem; color: var(--muted); line-height: 1.7; }
+.exp-bullets li::before { content: '→'; color: var(--accent); flex-shrink: 0; margin-top: .05rem; }
+.exp-bullets li strong { color: var(--text); font-weight: 500; }
+.exp-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .9rem; }
+.tag {
+  font-family: 'DM Mono', monospace; font-size: .64rem; padding: .18rem .6rem;
+  background: rgba(0,200,232,.07); border: 1px solid rgba(0,200,232,.22);
+  border-radius: 10px; color: var(--accent3); letter-spacing: .05em; transition: all .2s;
+}
+.tag:hover { background: rgba(0,200,232,.14); border-color: rgba(0,200,232,.4); }
+.tag.teal-tag {
+  background: rgba(20,196,168,.07); border-color: rgba(20,196,168,.22);
+  color: var(--teal2);
+}
+
+/* ═══════════════════════════════════════════════════════
+   PROJECTS
+   ═══════════════════════════════════════════════════════ */
+.projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.4rem; }
+.project-card {
+  padding: 1.9rem; transition: transform .28s, box-shadow .28s;
+  cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;
+}
+.project-card::after {
+  content: ''; position: absolute; inset: 0; border-radius: 16px;
+  background: linear-gradient(135deg, var(--glass-sheen) 0%, transparent 50%);
+  pointer-events: none;
+}
+.project-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,.35), 0 0 22px rgba(0,200,232,.10); }
+.project-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.project-num { font-family: 'DM Mono', monospace; font-size: .62rem; color: var(--dim); letter-spacing: .2em; margin-bottom: .8rem; }
+.project-title { font-family: 'DM Serif Display', serif; font-size: 1.18rem; color: var(--text); margin-bottom: .45rem; line-height: 1.3; }
+.project-type { font-family: 'DM Mono', monospace; font-size: .62rem; color: var(--fish-orange); letter-spacing: .15em; text-transform: uppercase; margin-bottom: .85rem; }
+.project-desc { font-size: .84rem; color: var(--muted); line-height: 1.75; flex: 1; margin-bottom: 1rem; }
+.project-metric {
+  background: rgba(0,200,232,.07); border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0; padding: .52rem .85rem;
+  font-family: 'DM Mono', monospace; font-size: .69rem; color: var(--accent2);
+  margin-bottom: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ENGINEERING SECTION
+   ═══════════════════════════════════════════════════════ */
+.eng-intro { font-size: .95rem; color: var(--muted); line-height: 1.85; max-width: 700px; margin-bottom: 2.8rem; }
+.eng-intro strong { color: var(--text); }
+.eng-context { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; margin-bottom: 2.8rem; }
+.eng-context-card {
+  padding: 1.7rem; border-left: 3px solid var(--teal); transition: transform .22s;
+}
+.eng-context-card:hover { transform: translateX(3px); }
+.eng-context-label { font-family: 'DM Mono', monospace; font-size: .64rem; color: var(--teal2); letter-spacing: .15em; text-transform: uppercase; margin-bottom: .75rem; }
+.eng-context-title { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--text); margin-bottom: .45rem; }
+.eng-context-sub { font-size: .84rem; color: var(--muted); line-height: 1.6; }
+.eng-tools { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .95rem; }
+.eng-projects-header {
+  font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--dim);
+  letter-spacing: .15em; text-transform: uppercase; margin-bottom: 1.4rem;
+  padding-bottom: .7rem; border-bottom: 1px solid var(--glass-border);
+}
+.pltl-card { padding: 2.4rem; position: relative; overflow: hidden; border-left: 4px solid var(--teal); }
+.pltl-card::before {
+  content: 'PLTL'; position: absolute; right: -1rem; top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  font-family: 'DM Serif Display', serif; font-size: 6rem;
+  color: rgba(20,196,168,.05); pointer-events: none; white-space: nowrap;
+}
+.pltl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.pltl-label { font-family: 'DM Mono', monospace; font-size: .63rem; color: var(--teal2); letter-spacing: .2em; text-transform: uppercase; margin-bottom: .45rem; }
+.pltl-title { font-family: 'DM Serif Display', serif; font-size: 1.75rem; color: var(--text); line-height: 1.2; margin-bottom: .35rem; }
+.pltl-title em { color: var(--teal2); font-style: italic; }
+.pltl-org { font-family: 'DM Mono', monospace; font-size: .7rem; color: var(--dim); margin-bottom: 1.1rem; }
+.pltl-desc { font-size: .88rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.3rem; }
+.pltl-specs { display: flex; flex-direction: column; gap: .75rem; }
+.spec-row { display: flex; gap: 1rem; align-items: baseline; }
+.spec-key { font-family: 'DM Mono', monospace; font-size: .63rem; color: var(--teal2); letter-spacing: .1em; min-width: 90px; text-transform: uppercase; }
+.spec-val { font-size: .84rem; color: var(--muted); }
+.spec-val strong { color: var(--text); font-weight: 500; }
+
+/* ═══════════════════════════════════════════════════════
+   SKILLS
+   ═══════════════════════════════════════════════════════ */
+.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.3rem; }
+.skill-category { padding: 1.55rem; }
+.skill-cat-title {
+  font-family: 'DM Mono', monospace; font-size: .69rem; color: var(--accent);
+  letter-spacing: .14em; text-transform: uppercase; margin-bottom: 1rem;
+  padding-bottom: .65rem; border-bottom: 1px solid var(--glass-border);
+}
+.skill-cat-title.teal { color: var(--teal2); }
+.skill-list { display: flex; flex-wrap: wrap; gap: .38rem; }
+.skill-pill {
+  font-size: .75rem; color: var(--muted); padding: .22rem .62rem;
+  background: var(--glass); border: 1px solid var(--glass-border); border-radius: 11px;
+  transition: all .2s; cursor: default;
+}
+.skill-pill:hover { border-color: var(--accent); color: var(--accent2); background: rgba(0,200,232,.09); }
+.skill-pill.teal-pill:hover { border-color: var(--teal); color: var(--teal2); background: rgba(20,196,168,.09); }
+
+/* ═══════════════════════════════════════════════════════
+   PUBLICATION
+   ═══════════════════════════════════════════════════════ */
+.pub-card { padding: 2rem 2.4rem; border-left: 4px solid var(--accent); position: relative; overflow: hidden; }
+.pub-card::before {
+  content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 38%;
+  background: linear-gradient(to left, rgba(0,200,232,.04), transparent); pointer-events: none;
+}
+.pub-label { font-family: 'DM Mono', monospace; font-size: .63rem; color: var(--accent); letter-spacing: .2em; text-transform: uppercase; margin-bottom: .7rem; }
+.pub-title { font-family: 'DM Serif Display', serif; font-size: 1.22rem; color: var(--text); line-height: 1.4; margin-bottom: .7rem; }
+.pub-meta { font-size: .81rem; color: var(--muted); line-height: 1.6; }
+.pub-meta em { color: var(--accent2); font-style: italic; }
+
+/* ═══════════════════════════════════════════════════════
+   CONTACT
+   ═══════════════════════════════════════════════════════ */
+#contact { text-align: center; padding: 7rem 3rem; position: relative; overflow: hidden; }
+#contact::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(0,100,180,.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+.contact-label { font-family: 'DM Mono', monospace; font-size: .73rem; color: var(--fish-orange); letter-spacing: .22em; text-transform: uppercase; margin-bottom: 1.4rem; }
+.contact-title { font-family: 'DM Serif Display', serif; font-size: clamp(2.4rem, 4.8vw, 3.8rem); color: var(--text); line-height: 1.12; margin-bottom: 1.4rem; }
+.contact-title em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--fish-orange), var(--fish-light), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.contact-sub { font-size: .94rem; color: var(--muted); margin-bottom: 2.8rem; }
+.contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: .95rem; }
+.contact-link {
+  display: flex; align-items: center; gap: .55rem;
+  font-family: 'DM Mono', monospace; font-size: .76rem; color: var(--muted);
+  text-decoration: none; padding: .72rem 1.4rem; border-radius: 24px;
+  transition: all .25s; letter-spacing: .05em;
+}
+.contact-link:hover { color: var(--accent2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3), 0 0 14px rgba(0,200,232,.18); }
+.contact-link svg { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════ */
+footer {
+  text-align: center; padding: 2rem;
+  border-top: 1px solid var(--glass-border);
+  font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--dim);
+  letter-spacing: .08em;
+  background: var(--nav-bg); backdrop-filter: blur(12px);
+}
+
+/* ═══════════════════════════════════════════════════════
+   FADE IN
+   ═══════════════════════════════════════════════════════ */
+.fade-in { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+}
+@media (max-width: 768px) {
+  .hero { padding: 6rem 1.5rem 3rem; }
+  .hero-inner { grid-template-columns: 1fr; gap: 2.2rem; }
+  .hero-stats { border-left: none; border-top: 1px solid var(--glass-border); padding-left: 0; padding-top: 1.4rem; flex-direction: row; flex-wrap: wrap; }
+  section { padding: 4rem 1.5rem; }
+  .about-grid { grid-template-columns: 1fr; }
+  .exp-item { grid-template-columns: 1fr; gap: .45rem; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .eng-context { grid-template-columns: 1fr; }
+  .pltl-grid { grid-template-columns: 1fr; }
+}
+
 </style>
 </head>
 <body>
 
+<!-- UNDERWATER BACKGROUND -->
+<div class="ocean-bg"></div>
+<div class="caustics">
+  <div class="caustic-ray"></div><div class="caustic-ray"></div>
+  <div class="caustic-ray"></div><div class="caustic-ray"></div>
+  <div class="caustic-ray"></div><div class="caustic-ray"></div>
+  <div class="caustic-ray"></div><div class="caustic-ray"></div>
+  <div class="caustic-ray"></div>
+</div>
+<div class="bubbles">
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+</div>
+
+<!-- ═══ FISH ═══════════════════════════════════════════
+  Fish 1, 3, 5  → swim LEFT→RIGHT (face right, swim-ltr)
+  Fish 2, 4     → swim RIGHT→LEFT (face left, swim-rtl, SVG drawn facing left)
+  ═══════════════════════════════════════════════════════ -->
+<div class="fish-layer">
+
+  <!-- Fish 1: medium, face right, LTR -->
+  <div class="fish fish-r fish-1">
+    <svg width="80" height="48" viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M68 24 L80 10 L80 38 Z" fill="#d96018" opacity=".88"/>
+      <ellipse cx="40" cy="24" rx="30" ry="13" fill="#ff7c2a"/>
+      <ellipse cx="35" cy="28" rx="18" ry="7"  fill="#ffb06a" opacity=".45"/>
+      <ellipse cx="33" cy="18" rx="15" ry="4.5" fill="#fff"   opacity=".15"/>
+      <ellipse cx="44" cy="24" rx="10" ry="7.5" fill="none" stroke="#d96018" stroke-width=".5" opacity=".4"/>
+      <ellipse cx="30" cy="24" rx="8"  ry="6.5" fill="none" stroke="#d96018" stroke-width=".5" opacity=".4"/>
+      <circle cx="16" cy="21" r="4"   fill="#1a3a50"/>
+      <circle cx="16" cy="21" r="2.2" fill="#0d2030"/>
+      <circle cx="15" cy="20" r=".8"  fill="white"/>
+      <path d="M30 10 Q38 2 50 8 Q44 14 30 13 Z" fill="#d96018" opacity=".8"/>
+      <path d="M26 29 Q19 37 23 41 Q31 36 33 29 Z" fill="#ff9040" opacity=".7"/>
+      <path d="M8 24 Q10 22 12 24" stroke="#b03808" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="38" cy="22" rx="11" ry="5.5" fill="url(#s1)" opacity=".3"/>
+      <defs>
+        <linearGradient id="s1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#7ef4ff"/>
+          <stop offset="40%"  stop-color="#ffb0e0"/>
+          <stop offset="80%"  stop-color="#ffe080"/>
+          <stop offset="100%" stop-color="#7ef4ff"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Fish 2: small, face LEFT (SVG mirrored), RTL -->
+  <div class="fish fish-l fish-2">
+    <svg width="55" height="34" viewBox="0 0 55 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- tail on LEFT side for left-facing fish -->
+      <path d="M8 17 L0 6 L0 28 Z" fill="#d05010" opacity=".88"/>
+      <ellipse cx="29" cy="17" rx="22" ry="10" fill="#ff8830"/>
+      <ellipse cx="32" cy="20" rx="13" ry="5"  fill="#ffb870" opacity=".45"/>
+      <ellipse cx="33" cy="13" rx="11" ry="3.5" fill="#fff"  opacity=".12"/>
+      <!-- eye on RIGHT side (the "front" for a left-facing fish) -->
+      <circle cx="44" cy="15" r="3"   fill="#1a3a50"/>
+      <circle cx="44" cy="15" r="1.6" fill="#0d2030"/>
+      <circle cx="44.7" cy="14.3" r=".6" fill="white"/>
+      <!-- dorsal fin -->
+      <path d="M36 7 Q30 2 21 6 Q26 10 36 10 Z" fill="#d05010" opacity=".8"/>
+      <!-- pectoral fin -->
+      <path d="M38 20 Q44 26 41 29 Q35 25 34 20 Z" fill="#ff9040" opacity=".7"/>
+      <!-- mouth on right -->
+      <path d="M50 18 Q48 16 46 18" stroke="#b03808" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="30" cy="16" rx="9" ry="4" fill="url(#s2)" opacity=".3"/>
+      <defs>
+        <linearGradient id="s2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#a0ffee"/>
+          <stop offset="50%"  stop-color="#ffe680"/>
+          <stop offset="100%" stop-color="#ffb0e0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Fish 3: large, face right, LTR -->
+  <div class="fish fish-r fish-3">
+    <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M84 30 L100 12 L100 48 Z" fill="#df6012" opacity=".88"/>
+      <ellipse cx="48" cy="30" rx="38" ry="17" fill="#ff7020"/>
+      <ellipse cx="43" cy="36" rx="24" ry="9"  fill="#ffa050" opacity=".45"/>
+      <ellipse cx="41" cy="22" rx="22" ry="5.5" fill="#fff"  opacity=".12"/>
+      <ellipse cx="56" cy="30" rx="14" ry="9.5" fill="none" stroke="#df6012" stroke-width=".6" opacity=".35"/>
+      <ellipse cx="37" cy="30" rx="11" ry="9"   fill="none" stroke="#df6012" stroke-width=".6" opacity=".35"/>
+      <circle cx="18" cy="26" r="5"   fill="#1a3a50"/>
+      <circle cx="18" cy="26" r="2.8" fill="#0d2030"/>
+      <circle cx="17" cy="25" r="1"   fill="white"/>
+      <path d="M36 12 Q47 3 63 10 Q55 18 36 17 Z" fill="#df6012" opacity=".8"/>
+      <path d="M31 38 Q22 49 27 53 Q38 48 40 38 Z" fill="#ff8030" opacity=".7"/>
+      <path d="M9 31 Q12 28 15 31" stroke="#b03808" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="46" cy="27" rx="15" ry="7.5" fill="url(#s3)" opacity=".32"/>
+      <defs>
+        <linearGradient id="s3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#80f0ff"/>
+          <stop offset="30%"  stop-color="#ff8fe8"/>
+          <stop offset="65%"  stop-color="#fff080"/>
+          <stop offset="100%" stop-color="#80c0ff"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Fish 4: tiny, face LEFT (SVG mirrored), RTL -->
+  <div class="fish fish-l fish-4">
+    <svg width="42" height="27" viewBox="0 0 42 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- tail on LEFT -->
+      <path d="M7 13 L0 4 L0 22 Z" fill="#c85010"/>
+      <ellipse cx="22" cy="13" rx="17" ry="8" fill="#ff8528"/>
+      <ellipse cx="25" cy="16" rx="10" ry="4"  fill="#ffaa60" opacity=".5"/>
+      <!-- eye on RIGHT -->
+      <circle cx="34" cy="11" r="2.5" fill="#1a3a50"/>
+      <circle cx="34" cy="11" r="1.3" fill="#0d2030"/>
+      <circle cx="34.5" cy="10.5" r=".5" fill="white"/>
+      <!-- dorsal fin -->
+      <path d="M28 5 Q23 1 16 5 Q20 8 28 8 Z" fill="#c85010" opacity=".8"/>
+      <!-- mouth on right -->
+      <path d="M38 14 Q36 12 34 14" stroke="#a03808" stroke-width=".9" fill="none" stroke-linecap="round"/>
+      <ellipse cx="22" cy="12" rx="7" ry="3.5" fill="url(#s4)" opacity=".32"/>
+      <defs>
+        <linearGradient id="s4" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#90ffee"/>
+          <stop offset="50%"  stop-color="#ffd080"/>
+          <stop offset="100%" stop-color="#ff90d0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Fish 5: calico white+orange, face right, LTR -->
+  <div class="fish fish-r fish-5">
+    <svg width="90" height="56" viewBox="0 0 90 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M76 28 L90 12 L90 44 Z" fill="#cc5510" opacity=".85"/>
+      <ellipse cx="43" cy="28" rx="34" ry="16" fill="#f5ede0"/>
+      <ellipse cx="36" cy="25" rx="14" ry="10" fill="#ff8028" opacity=".68"/>
+      <ellipse cx="57" cy="31" rx="10" ry="8"  fill="#ff6a18" opacity=".62"/>
+      <ellipse cx="25" cy="31" rx="8"  ry="6"  fill="#ffa040" opacity=".48"/>
+      <ellipse cx="38" cy="20" rx="20" ry="6"  fill="#fff"    opacity=".22"/>
+      <path d="M32 11 Q41 3 57 9 Q50 17 32 16 Z" fill="#f08030" opacity=".75"/>
+      <path d="M29 36 Q21 46 25 50 Q34 45 36 36 Z" fill="#f09050" opacity=".65"/>
+      <circle cx="16" cy="24" r="4.5" fill="#1a3a50"/>
+      <circle cx="16" cy="24" r="2.5" fill="#0d2030"/>
+      <circle cx="15" cy="23" r=".9"  fill="white"/>
+      <path d="M7 27 Q10 24 13 27" stroke="#b03808" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="42" cy="26" rx="14" ry="7" fill="url(#s5)" opacity=".28"/>
+      <defs>
+        <linearGradient id="s5" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#70f8ff"/>
+          <stop offset="30%"  stop-color="#ffe880"/>
+          <stop offset="65%"  stop-color="#ffa0e0"/>
+          <stop offset="100%" stop-color="#80d8ff"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+</div><!-- /fish-layer -->
+
+<!-- ═══════════════════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════════════════════ -->
 <nav>
   <div class="nav-logo">PLL</div>
   <div class="nav-links">
@@ -223,36 +780,46 @@
     <a href="#engineering">Engineering</a>
     <a href="#skills">Skills</a>
   </div>
-  <a href="mailto:putrileksono1@gmail.com" class="nav-cta">Get in Touch</a>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <span class="toggle-sun">☀️</span>
+      <span class="toggle-moon">🌙</span>
+    </button>
+    <a href="mailto:putrileksono1@gmail.com" class="nav-cta">Get in Touch</a>
+  </div>
 </nav>
 
+<!-- ═══════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════ -->
 <section class="hero" id="home">
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-blob hero-blob-3"></div>
   <div class="hero-inner">
-    <div>
+    <div class="hero-left fade-in">
       <div class="hero-tag">Honours CS · UBC Okanagan · May 2026</div>
-      <h1>Building <em>intelligent</em> systems that matter</h1>
-      <p class="hero-desc">ML Engineer with international research experience across Japan & Germany. Computer vision, deep learning, and full-stack AI — grounded in an engineering foundation from Bandung Institute of Technology.</p>
+      <h1>Building <em>intelligent</em><br/>systems that matter</h1>
+      <p class="hero-desc">ML Engineer with international research experience across Japan &amp; Germany. Computer vision, deep learning, and full-stack AI — grounded in an engineering foundation from Bandung Institute of Technology.</p>
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">View Projects</a>
         <a href="#engineering" class="btn-secondary">Engineering Work</a>
       </div>
     </div>
-    <div class="hero-stats">
-      <div class="stat-card">
+    <div class="hero-stats fade-in" style="transition-delay:.2s">
+      <div class="stat-card glass">
         <div class="stat-number">2</div>
         <div class="stat-label">International Research Internships</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card glass">
         <div class="stat-number">3</div>
         <div class="stat-label">Countries · Japan · Germany · Canada</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card glass">
         <div class="stat-number">1</div>
         <div class="stat-label">Peer-Reviewed Publication (submitted)</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card glass">
         <div class="stat-number">79.5%</div>
         <div class="stat-label">GPA · Honours Computer Science</div>
       </div>
@@ -260,7 +827,9 @@
   </div>
 </section>
 
-<!-- ABOUT -->
+<!-- ═══════════════════════════════════════════════════════
+     ABOUT
+     ═══════════════════════════════════════════════════════ -->
 <section id="about">
   <div class="section-inner">
     <div class="section-header fade-in">
@@ -270,9 +839,9 @@
     </div>
     <div class="about-grid">
       <div class="about-text fade-in">
-        <p>I'm <strong>Putri Larasati Leksono</strong>, an Honours Computer Science student at UBC Okanagan graduating May 2026, specialising in <strong>machine learning, computer vision, and deep learning</strong>. Originally from Indonesia, I've had the rare opportunity to do research at a corporate R&D lab in Japan and an academic institute in Germany — before finishing my undergrad.</p>
+        <p>I'm <strong>Putri Larasati Leksono</strong>, an Honours Computer Science student at UBC Okanagan graduating May 2026, specialising in <strong>machine learning, computer vision, and deep learning</strong>. Originally from Indonesia, I've had the rare opportunity to do research at a corporate R&amp;D lab in Japan and an academic institute in Germany — before finishing my undergrad.</p>
         <p>At NTT's Device Technology Laboratory in Japan, I built ML pipelines for 3D ultrasound reconstruction, achieving a <strong>94% improvement in signal alignment</strong> using homography transforms and deep learning models including Swin Transformers. In Germany, I designed and trained an LSTM for real-time marine GPS forecasting.</p>
-        <p>Before CS, I studied <strong>Civil & Environmental Engineering at Bandung Institute of Technology (ITB)</strong>, Indonesia — where I developed an engineering foundation in infrastructure design, AutoCAD, SketchUp, and systems thinking. That background shapes how I approach problems: analytically, with attention to the real-world systems that code has to interact with.</p>
+        <p>Before CS, I studied <strong>Civil &amp; Environmental Engineering at Bandung Institute of Technology (ITB)</strong>, Indonesia — where I developed an engineering foundation in infrastructure design, AutoCAD, SketchUp, and systems thinking. That background shapes how I approach problems: analytically, with attention to the real-world systems that code has to interact with.</p>
         <div class="about-chips">
           <span class="chip accent">PyTorch</span>
           <span class="chip accent">Computer Vision</span>
@@ -287,28 +856,28 @@
           <span class="chip teal">Environmental Engineering</span>
         </div>
       </div>
-      <div class="about-awards fade-in" style="transition-delay:0.15s">
-        <div class="award-item">
+      <div class="about-awards fade-in" style="transition-delay:.15s">
+        <div class="award-item glass-sm">
           <div class="award-title">🎓 Beasiswa Indonesia Maju (BIM) Scholarship</div>
           <div class="award-meta">Indonesian Government · ~$331,200 CAD · Full 4-Year Award</div>
         </div>
-        <div class="award-item">
+        <div class="award-item glass-sm">
           <div class="award-title">🌍 DAAD RISE Germany Scholar</div>
           <div class="award-meta">Jade Hochschule · Wilhelmshaven · Apr–Aug 2024</div>
         </div>
-        <div class="award-item">
+        <div class="award-item glass-sm">
           <div class="award-title">🥈 2nd Place — Hack-Attack: Girls in Tech Hackathon</div>
           <div class="award-meta">UBC Okanagan · Mar 2024</div>
         </div>
-        <div class="award-item">
+        <div class="award-item glass-sm">
           <div class="award-title">🥉 Bronze + Best Poster — Asia Pacific Young Scientists</div>
           <div class="award-meta">International Competition · Feb 2021</div>
         </div>
-        <div class="award-item">
+        <div class="award-item glass-sm">
           <div class="award-title">🥇 Gold — 7th International Young Inventors Award</div>
           <div class="award-meta">International Competition · Nov 2020</div>
         </div>
-        <div class="award-item">
+        <div class="award-item glass-sm">
           <div class="award-title">🥇 Gold — 6th International Young Inventors Award</div>
           <div class="award-meta">International Competition · Oct 2019</div>
         </div>
@@ -317,7 +886,9 @@
   </div>
 </section>
 
-<!-- EXPERIENCE -->
+<!-- ═══════════════════════════════════════════════════════
+     EXPERIENCE
+     ═══════════════════════════════════════════════════════ -->
 <section id="experience">
   <div class="section-inner">
     <div class="section-header fade-in">
@@ -334,13 +905,13 @@
           <div class="exp-flag">🇯🇵</div>
         </div>
         <div class="exp-content">
-          <div class="exp-org">NTT Atsugi R&D · Device Technology Lab</div>
+          <div class="exp-org">NTT Atsugi R&amp;D · Device Technology Lab</div>
           <div class="exp-role">Research Intern</div>
           <div class="exp-research">3D Construction of Acoustic Impedance Microscopy Using Ultrasound Signals</div>
           <ul class="exp-bullets">
             <li>Built end-to-end Python data pipelines converting raw 1D ultrasound signals into <strong>3D cross-sectional reconstructions</strong> using signal filtering and noise-reduction techniques.</li>
             <li>Achieved <strong>94% improvement in signal alignment accuracy</strong> via homography transformation algorithms validated against ground truth datasets.</li>
-            <li>Developed and benchmarked <strong>Swin Transformer and CNN models</strong> in PyTorch for biomedical image classification in a production R&D environment.</li>
+            <li>Developed and benchmarked <strong>Swin Transformer and CNN models</strong> in PyTorch for biomedical image classification in a production R&amp;D environment.</li>
             <li>Improved image reconstruction clarity by <strong>up to 90%</strong> using Wiener deconvolution, TV averaging, and frequency-time domain methods.</li>
           </ul>
           <div class="exp-tags">
@@ -376,7 +947,9 @@
   </div>
 </section>
 
-<!-- PROJECTS -->
+<!-- ═══════════════════════════════════════════════════════
+     PROJECTS
+     ═══════════════════════════════════════════════════════ -->
 <section id="projects">
   <div class="section-inner">
     <div class="section-header fade-in">
@@ -386,7 +959,7 @@
     </div>
     <div class="projects-grid">
 
-      <div class="project-card featured fade-in">
+      <div class="project-card glass featured fade-in">
         <div>
           <div class="project-num">01 · HONOURS THESIS</div>
           <div class="project-type">Computer Vision · Remote Sensing</div>
@@ -403,7 +976,7 @@
         </div>
       </div>
 
-      <div class="project-card fade-in">
+      <div class="project-card glass fade-in">
         <div class="project-num">02 · CAPSTONE</div>
         <div class="project-type">Full-Stack ML · Deployment</div>
         <div class="project-title">AI-Driven Aesthetic Assessment System</div>
@@ -415,7 +988,7 @@
         </div>
       </div>
 
-      <div class="project-card fade-in" style="transition-delay:0.1s">
+      <div class="project-card glass fade-in" style="transition-delay:.1s">
         <div class="project-num">03 · HACKATHON · 2nd PLACE</div>
         <div class="project-type">GenAI · Voice Interface</div>
         <div class="project-title">AI-Powered Customer Service Kiosk</div>
@@ -427,7 +1000,7 @@
         </div>
       </div>
 
-      <div class="project-card fade-in" style="transition-delay:0.15s">
+      <div class="project-card glass fade-in" style="transition-delay:.15s">
         <div class="project-num">04 · SOFTWARE ENGINEERING</div>
         <div class="project-type">Web App · Environmental</div>
         <div class="project-title">BlueBuffalo — Air Pollution Monitoring Platform</div>
@@ -443,7 +1016,9 @@
   </div>
 </section>
 
-<!-- ENGINEERING BACKGROUND -->
+<!-- ═══════════════════════════════════════════════════════
+     ENGINEERING BACKGROUND
+     ═══════════════════════════════════════════════════════ -->
 <section id="engineering">
   <div class="section-inner">
     <div class="section-header fade-in">
@@ -452,13 +1027,13 @@
       <div class="section-line"></div>
     </div>
 
-    <p class="eng-intro fade-in">Before computer science, I studied <strong>Civil & Environmental Engineering at Bandung Institute of Technology (ITB)</strong> — one of Indonesia's most prestigious technical universities. That foundation gave me something most CS graduates don't have: the ability to think in <strong>systems, infrastructure, and real-world constraints</strong>. Transfer credits from ITB are reflected in my UBC degree.</p>
+    <p class="eng-intro fade-in">Before computer science, I studied <strong>Civil &amp; Environmental Engineering at Bandung Institute of Technology (ITB)</strong> — one of Indonesia's most prestigious technical universities. That foundation gave me something most CS graduates don't have: the ability to think in <strong>systems, infrastructure, and real-world constraints</strong>. Transfer credits from ITB are reflected in my UBC degree.</p>
 
     <div class="eng-context fade-in">
-      <div class="eng-context-card">
+      <div class="eng-context-card glass-sm">
         <div class="eng-context-label">Institution</div>
         <div class="eng-context-title">Bandung Institute of Technology (ITB)</div>
-        <div class="eng-context-sub">Civil & Environmental Engineering · Bandung, Indonesia · One of Southeast Asia's leading technical universities, founded 1920.</div>
+        <div class="eng-context-sub">Civil &amp; Environmental Engineering · Bandung, Indonesia · One of Southeast Asia's leading technical universities, founded 1920.</div>
         <div class="eng-tools">
           <span class="chip teal">AutoCAD</span>
           <span class="chip teal">SketchUp</span>
@@ -466,9 +1041,9 @@
           <span class="chip teal">Environmental Systems</span>
         </div>
       </div>
-      <div class="eng-context-card">
+      <div class="eng-context-card glass-sm">
         <div class="eng-context-label">Skills Gained</div>
-        <div class="eng-context-title">Technical Design & Analysis</div>
+        <div class="eng-context-title">Technical Design &amp; Analysis</div>
         <div class="eng-context-sub">Floor plan drafting and facility design in AutoCAD. 3D modelling in SketchUp. Infrastructure planning, cost-benefit analysis, and environmental engineering problem-solving.</div>
         <div class="eng-tools">
           <span class="chip teal">Floor Plans</span>
@@ -481,7 +1056,7 @@
 
     <div class="eng-projects-header fade-in">Featured Engineering Project</div>
 
-    <div class="pltl-card fade-in">
+    <div class="pltl-card glass fade-in">
       <div class="pltl-grid">
         <div>
           <div class="pltl-label">Group Design Project · ITB · 2021–2022</div>
@@ -490,12 +1065,13 @@
           <p class="pltl-desc">Designed a bioelectrochemical system to generate electricity from landfill leachate — hazardous wastewater that forms as liquid percolates through solid waste. Rather than treating leachate as a waste problem, this system converts its mineral-rich chemistry into usable electrical output, addressing both environmental remediation and renewable energy simultaneously.</p>
           <p class="pltl-desc">Produced complete technical schematics in <strong>AutoCAD</strong> and full 3D facility models in <strong>SketchUp</strong>. Designed for industrial scale: 507 reactor tubes, each built from resin with dual anode/cathode chambers connected by KNO₃ salt bridges.</p>
           <div class="exp-tags" style="margin-top:1rem">
-            <span class="tag">AutoCAD</span><span class="tag">SketchUp</span><span class="tag">Bioelectrochemistry</span>
-            <span class="tag">Environmental Engineering</span><span class="tag">Cost Analysis</span>
+            <span class="tag teal-tag">AutoCAD</span><span class="tag teal-tag">SketchUp</span>
+            <span class="tag teal-tag">Bioelectrochemistry</span>
+            <span class="tag teal-tag">Environmental Engineering</span><span class="tag teal-tag">Cost Analysis</span>
           </div>
         </div>
         <div class="pltl-specs">
-          <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--teal2);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;">Technical Specifications</div>
+          <div style="font-family:'DM Mono',monospace;font-size:.63rem;color:var(--teal2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.95rem;">Technical Specifications</div>
           <div class="spec-row">
             <span class="spec-key">Electrode</span>
             <span class="spec-val">Carbon biocathode · 9 chambers · <strong>Ø 1.2 cm × 6.5 cm</strong> · 0.0256 m² surface area</span>
@@ -527,7 +1103,9 @@
   </div>
 </section>
 
-<!-- SKILLS -->
+<!-- ═══════════════════════════════════════════════════════
+     SKILLS
+     ═══════════════════════════════════════════════════════ -->
 <section id="skills">
   <div class="section-inner">
     <div class="section-header fade-in">
@@ -536,15 +1114,15 @@
       <div class="section-line"></div>
     </div>
     <div class="skills-grid">
-      <div class="skill-category fade-in">
-        <div class="skill-cat-title">ML & Deep Learning</div>
+      <div class="skill-category glass fade-in">
+        <div class="skill-cat-title">ML &amp; Deep Learning</div>
         <div class="skill-list">
           <span class="skill-pill">PyTorch</span><span class="skill-pill">TensorFlow</span><span class="skill-pill">Keras</span>
           <span class="skill-pill">scikit-learn</span><span class="skill-pill">U-Net</span><span class="skill-pill">SegFormer</span>
           <span class="skill-pill">Swin Transformer</span><span class="skill-pill">CNN</span><span class="skill-pill">LSTM</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.05s">
+      <div class="skill-category glass fade-in" style="transition-delay:.05s">
         <div class="skill-cat-title">Computer Vision</div>
         <div class="skill-list">
           <span class="skill-pill">OpenCV</span><span class="skill-pill">scikit-image</span><span class="skill-pill">NumPy</span>
@@ -552,23 +1130,23 @@
           <span class="skill-pill">Remote Sensing</span><span class="skill-pill">Sentinel-2</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.1s">
-        <div class="skill-cat-title">GenAI & LLMs</div>
+      <div class="skill-category glass fade-in" style="transition-delay:.1s">
+        <div class="skill-cat-title">GenAI &amp; LLMs</div>
         <div class="skill-list">
           <span class="skill-pill">Gemini API</span><span class="skill-pill">Prompt Engineering</span>
           <span class="skill-pill">Speech-to-Text AI</span><span class="skill-pill">LLM Integration</span>
           <span class="skill-pill">API-Driven AI Products</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.15s">
-        <div class="skill-cat-title">MLOps & Infrastructure</div>
+      <div class="skill-category glass fade-in" style="transition-delay:.15s">
+        <div class="skill-cat-title">MLOps &amp; Infrastructure</div>
         <div class="skill-list">
           <span class="skill-pill">Docker</span><span class="skill-pill">Docker Compose</span><span class="skill-pill">Git</span>
           <span class="skill-pill">Linux</span><span class="skill-pill">Bash</span><span class="skill-pill">ETL Pipelines</span>
           <span class="skill-pill">Jupyter</span><span class="skill-pill">CI/CD</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.2s">
+      <div class="skill-category glass fade-in" style="transition-delay:.2s">
         <div class="skill-cat-title">Programming</div>
         <div class="skill-list">
           <span class="skill-pill">Python</span><span class="skill-pill">TypeScript</span><span class="skill-pill">JavaScript</span>
@@ -576,16 +1154,16 @@
           <span class="skill-pill">SQL</span><span class="skill-pill">Bash</span><span class="skill-pill">PHP</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.25s">
-        <div class="skill-cat-title">Full-Stack & Frameworks</div>
+      <div class="skill-category glass fade-in" style="transition-delay:.25s">
+        <div class="skill-cat-title">Full-Stack &amp; Frameworks</div>
         <div class="skill-list">
           <span class="skill-pill">React</span><span class="skill-pill">Next.js</span><span class="skill-pill">Node.js</span>
           <span class="skill-pill">Flask</span><span class="skill-pill">Django</span><span class="skill-pill">Express.js</span>
           <span class="skill-pill">REST APIs</span><span class="skill-pill">JWT Auth</span>
         </div>
       </div>
-      <div class="skill-category fade-in" style="transition-delay:0.3s">
-        <div class="skill-cat-title teal">Engineering & Design Tools</div>
+      <div class="skill-category glass fade-in" style="transition-delay:.3s">
+        <div class="skill-cat-title teal">Engineering &amp; Design Tools</div>
         <div class="skill-list">
           <span class="skill-pill teal-pill">AutoCAD</span><span class="skill-pill teal-pill">SketchUp</span>
           <span class="skill-pill teal-pill">Floor Plan Design</span><span class="skill-pill teal-pill">3D Modelling</span>
@@ -596,7 +1174,9 @@
   </div>
 </section>
 
-<!-- PUBLICATION -->
+<!-- ═══════════════════════════════════════════════════════
+     PUBLICATION
+     ═══════════════════════════════════════════════════════ -->
 <section id="publication">
   <div class="section-inner">
     <div class="section-header fade-in">
@@ -604,7 +1184,7 @@
       <h2 class="section-title">Publication</h2>
       <div class="section-line"></div>
     </div>
-    <div class="pub-card fade-in">
+    <div class="pub-card glass fade-in">
       <div class="pub-label">Submitted · 2025 · Peer-Reviewed Journal</div>
       <div class="pub-title">Remote Sensing and Artificial Intelligence for Integrated Analysis of Mangrove Dynamics and Blue Carbon Potential</div>
       <div class="pub-meta">
@@ -614,21 +1194,23 @@
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- ═══════════════════════════════════════════════════════
+     CONTACT
+     ═══════════════════════════════════════════════════════ -->
 <section id="contact">
   <div class="contact-label">Let's work together</div>
   <h2 class="contact-title">Open to <em>opportunities</em><br/>from May 2026</h2>
-  <p class="contact-sub">Seeking ML Engineer, Computer Vision, Data Science, or Engineering-adjacent roles. Based in Kelowna, BC — open to remote & relocation.</p>
+  <p class="contact-sub">Seeking ML Engineer, Computer Vision, Data Science, or Engineering-adjacent roles. Based in Kelowna, BC — open to remote &amp; relocation.</p>
   <div class="contact-links">
-    <a href="mailto:putrileksono1@gmail.com" class="contact-link">
+    <a href="mailto:putrileksono1@gmail.com" class="contact-link glass">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
       putrileksono1@gmail.com
     </a>
-    <a href="https://linkedin.com/in/putrileksono" target="_blank" class="contact-link">
+    <a href="https://linkedin.com/in/putrileksono" target="_blank" class="contact-link glass">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
       linkedin.com/in/putrileksono
     </a>
-    <a href="https://github.com/puyangogju" target="_blank" class="contact-link">
+    <a href="https://github.com/puyangogju" target="_blank" class="contact-link glass">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
       github.com/puyangogju
     </a>
@@ -636,18 +1218,40 @@
 </section>
 
 <footer>
-  © 2026 Putri Larasati Leksono · Honours CS · UBC Okanagan · Built with care
+  © 2026 Putri Larasati Leksono · Built with care · Honours CS · UBC Okanagan
 </footer>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 60);
-      }
-    });
-  }, { threshold: 0.1 });
+  /* ── Fade-in on scroll ── */
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
+    { threshold: 0.10 }
+  );
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  /* ── Dark / Light toggle ── */
+  function toggleTheme() {
+    const html = document.documentElement;
+    html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', html.dataset.theme);
+  }
+  // Restore saved preference
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+
+  /* ── Mouse parallax on fish ── */
+  const fishEls = document.querySelectorAll('.fish');
+  document.addEventListener('mousemove', e => {
+    const my = (e.clientY / window.innerHeight - 0.5) * 2;
+    fishEls.forEach((f, i) => { f.style.marginTop = (my * (i % 3 + 1) * 3.5) + 'px'; });
+  });
+
+  /* ── Caustic brightness on scroll ── */
+  const rays = document.querySelectorAll('.caustic-ray');
+  window.addEventListener('scroll', () => {
+    const t = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    rays.forEach((r, i) => { r.style.opacity = 0.35 + Math.sin(t * Math.PI * 3 + i) * 0.28; });
+  }, { passive: true });
 </script>
 </body>
 </html>
