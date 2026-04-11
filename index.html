@@ -445,7 +445,7 @@ section { padding: 6rem 3rem; position: relative; }
 /* ═══════════════════════════════════════════════════════
    PROJECTS
    ═══════════════════════════════════════════════════════ */
-.projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.4rem; }
+.projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.4rem; align-items: start; }
 .project-card {
   padding: 1.9rem; transition: transform .28s, box-shadow .28s;
   cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;
@@ -505,6 +505,34 @@ section { padding: 6rem 3rem; position: relative; }
 .spec-key { font-family: 'DM Mono', monospace; font-size: .63rem; color: var(--teal2); letter-spacing: .1em; min-width: 90px; text-transform: uppercase; }
 .spec-val { font-size: .84rem; color: var(--muted); }
 .spec-val strong { color: var(--text); font-weight: 500; }
+
+/* ── Project media & links ── */
+.project-media {
+  border-radius: 10px; overflow: hidden;
+  background: var(--bg-1); border: 1px solid var(--glass-border);
+  margin-bottom: 1.2rem; position: relative;
+  box-shadow: inset 0 0 20px rgba(0,0,0,.2);
+}
+.project-media iframe { width: 100%; display: block; border: none; }
+.project-media-placeholder {
+  width: 100%; height: 185px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem;
+  background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  color: var(--dim); font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .1em;
+}
+.project-media-placeholder svg { width: 28px; height: 28px; opacity: .4; }
+.project-links { display: flex; gap: .55rem; margin-top: .85rem; flex-wrap: wrap; }
+.project-link-btn {
+  display: inline-flex; align-items: center; gap: .38rem;
+  font-family: 'DM Mono', monospace; font-size: .64rem; letter-spacing: .07em;
+  padding: .28rem .75rem; border-radius: 12px; text-decoration: none;
+  transition: all .22s; border: 1px solid var(--glass-border);
+  color: var(--muted); background: var(--glass); backdrop-filter: blur(6px);
+}
+.project-link-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+.project-link-btn:hover { border-color: var(--accent2); color: var(--accent2); box-shadow: 0 0 12px rgba(0,200,232,.15); }
+.project-link-btn.demo { border-color: rgba(255,124,42,.28); color: var(--fish-orange); }
+.project-link-btn.demo:hover { border-color: var(--fish-orange); color: var(--fish-light); box-shadow: 0 0 12px rgba(255,124,42,.18); }
 
 /* ═══════════════════════════════════════════════════════
    SKILLS
@@ -959,24 +987,50 @@ footer {
     </div>
     <div class="projects-grid">
 
+      <!-- 01: Honours Thesis — featured, 2-col: text left / slides right -->
       <div class="project-card glass featured fade-in">
         <div>
           <div class="project-num">01 · HONOURS THESIS</div>
           <div class="project-type">Computer Vision · Remote Sensing</div>
           <div class="project-title">Semantic Segmentation of Sentinel-2 Imagery for Crop Type Mapping</div>
           <div class="project-metric">SegFormer: 68% IoU · U-Net: 63% IoU · Saskatchewan crop classification</div>
-          <p class="project-desc">Trained and compared SegFormer and U-Net architectures in PyTorch on multi-spectral Sentinel-2 satellite imagery to classify crop types across Saskatchewan farmland. Performed rigorous band-selection experiments using PCA, Random Forest feature importance, and ANOVA F-scores to identify optimal spectral inputs.</p>
-        </div>
-        <div>
-          <p class="project-desc" style="margin-top:2.5rem">Documented architecture trade-offs, evaluated models using IoU, Dice Coefficient, and Pixel Accuracy, and presented findings at an academic Honours presentation to a multidisciplinary audience.</p>
-          <div class="exp-tags" style="margin-top:auto">
+          <p class="project-desc">Trained and compared SegFormer and U-Net architectures in PyTorch on multi-spectral Sentinel-2 satellite imagery to classify crop types across Saskatchewan farmland. Performed rigorous band-selection experiments using PCA, Random Forest feature importance, and ANOVA F-scores.</p>
+          <p class="project-desc">Documented architecture trade-offs, evaluated models with IoU, Dice Coefficient &amp; Pixel Accuracy, and presented findings at an academic Honours presentation to a multidisciplinary audience.</p>
+          <div class="exp-tags">
             <span class="tag">PyTorch</span><span class="tag">SegFormer</span><span class="tag">U-Net</span>
             <span class="tag">PCA</span><span class="tag">Remote Sensing</span><span class="tag">Python</span>
           </div>
+          <div class="project-links">
+            <a href="https://github.com/puyangogju/COSC-449-Honors-Putri-Leksono" target="_blank" class="project-link-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+        <!-- Presentation embed -->
+        <div>
+          <div class="project-media">
+            <iframe
+              src="https://docs.google.com/presentation/d/1Gn4NPyp5g6USoolk4Ra5K0-10ZaxH_IYw2M7YnRfcAM/embed?start=false&loop=false&delayms=5000"
+              height="300"
+              allowfullscreen
+              title="Honours Thesis Presentation">
+            </iframe>
+          </div>
+          <p style="font-family:'DM Mono',monospace;font-size:.64rem;color:var(--dim);letter-spacing:.07em;">↑ Honours Thesis Presentation Slides</p>
         </div>
       </div>
 
+      <!-- 02: Capstone — with Google Drive demo video -->
       <div class="project-card glass fade-in">
+        <div class="project-media">
+          <iframe
+            src="https://drive.google.com/file/d/1if07Gom7ORFV9DtPxKvBwCpzJi2Qaimv/preview"
+            height="200"
+            allow="autoplay"
+            title="Capstone Demo Video">
+          </iframe>
+        </div>
         <div class="project-num">02 · CAPSTONE</div>
         <div class="project-type">Full-Stack ML · Deployment</div>
         <div class="project-title">AI-Driven Aesthetic Assessment System</div>
@@ -986,10 +1040,30 @@ footer {
           <span class="tag">Python</span><span class="tag">React</span><span class="tag">Node.js</span>
           <span class="tag">Docker</span><span class="tag">Random Forest</span>
         </div>
+        <div class="project-links">
+          <a href="https://github.com/COSC-499-W2024/capstone-project-team-5-002" target="_blank" class="project-link-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            GitHub
+          </a>
+          <a href="https://drive.google.com/file/d/1if07Gom7ORFV9DtPxKvBwCpzJi2Qaimv/view" target="_blank" class="project-link-btn demo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Demo
+          </a>
+        </div>
       </div>
 
-      <div class="project-card glass fade-in" style="transition-delay:.1s">
-        <div class="project-num">03 · HACKATHON · 2nd PLACE</div>
+      <!-- 03: AI Voice Kiosk — with YouTube embed -->
+      <div class="project-card glass fade-in" style="transition-delay:.08s">
+        <div class="project-media">
+          <iframe
+            src="https://www.youtube.com/embed/cx1xIBGYu8w"
+            height="200"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            title="AI Voice Kiosk Demo">
+          </iframe>
+        </div>
+        <div class="project-num">03 · HACKATHON · TOP SUBMISSION</div>
         <div class="project-type">GenAI · Voice Interface</div>
         <div class="project-title">AI-Powered Customer Service Kiosk</div>
         <div class="project-metric">Built in &lt;24hrs · Hack-Attack 3.0 · Mar 2026</div>
@@ -998,10 +1072,52 @@ footer {
           <span class="tag">Gemini API</span><span class="tag">Next.js</span><span class="tag">TypeScript</span>
           <span class="tag">Python</span><span class="tag">Speech-to-Text</span>
         </div>
+        <div class="project-links">
+          <a href="https://github.com/queuo/queuo" target="_blank" class="project-link-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            GitHub
+          </a>
+          <a href="https://www.youtube.com/watch?v=cx1xIBGYu8w" target="_blank" class="project-link-btn demo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Watch Demo
+          </a>
+        </div>
       </div>
 
-      <div class="project-card glass fade-in" style="transition-delay:.15s">
-        <div class="project-num">04 · SOFTWARE ENGINEERING</div>
+      <!-- 04: Eco Heroes — 2nd place hackathon, placeholder -->
+      <div class="project-card glass fade-in" style="transition-delay:.12s">
+        <div class="project-media">
+          <div class="project-media-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Demo coming soon
+          </div>
+        </div>
+        <div class="project-num">04 · HACKATHON · 2nd PLACE</div>
+        <div class="project-type">Education · Sustainability · SDGs</div>
+        <div class="project-title">Eco Heroes — SDG Learning Dashboard for Kids</div>
+        <div class="project-metric">2nd Place · Girls in Tech Hackathon · UBC Okanagan · Mar 2024</div>
+        <p class="project-desc">Interactive learning dashboard designed to teach children about the UN Sustainable Development Goals through gamified challenges and visual storytelling. Built in a hackathon setting focused on accessibility and engagement for young learners.</p>
+        <div class="exp-tags">
+          <span class="tag">JavaScript</span><span class="tag">Education Tech</span><span class="tag">SDGs</span>
+          <span class="tag">UI/UX</span><span class="tag">Hackathon</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/joyfuluj/Eco-Heroes" target="_blank" class="project-link-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- 05: BlueBuffalo — placeholder -->
+      <div class="project-card glass fade-in" style="transition-delay:.16s">
+        <div class="project-media">
+          <div class="project-media-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Demo coming soon
+          </div>
+        </div>
+        <div class="project-num">05 · SOFTWARE ENGINEERING</div>
         <div class="project-type">Web App · Environmental</div>
         <div class="project-title">BlueBuffalo — Air Pollution Monitoring Platform</div>
         <div class="project-metric">Interactive map visualisations · Real-time data</div>
@@ -1009,6 +1125,12 @@ footer {
         <div class="exp-tags">
           <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Django</span>
           <span class="tag">Leaflet.js</span><span class="tag">SQLite</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/leolelion/bluebuffalo" target="_blank" class="project-link-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            GitHub
+          </a>
         </div>
       </div>
 
